@@ -4,21 +4,22 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import ProfilePage from './pages/ProfilePage';
+import FamilyPage from './pages/FamilyPage';
 
 function App() {
     return (
         <AuthProvider>
             <Router>
                 <Routes>
-                    {/* Rute Publik */}
                     <Route path="/login" element={<LoginPage />} />
 
-                    {/* Rute Privat (Hanya bisa diakses jika sudah login) */}
                     <Route element={<ProtectedRoute />}>
                         <Route path="/dashboard" element={<DashboardPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/family" element={<FamilyPage />} />
                     </Route>
 
-                    {/* Redirect root ke dashboard */}
                     <Route path="*" element={<Navigate to="/dashboard" replace />} />
                 </Routes>
             </Router>
