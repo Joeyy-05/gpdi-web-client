@@ -7,8 +7,9 @@ import PublicLayout from './layouts/PublicLayout';
 import AdminLayout  from './layouts/AdminLayout';
 
 // --- HALAMAN PUBLIK ---
-import HomePage    from './pages/jemaatpublik/HomePage';
-import JadwalPage  from './pages/jemaatpublik/JadwalPage';   // ← BARU
+import HomePage            from './pages/jemaatpublik/HomePage';
+import JadwalPage          from './pages/jemaatpublik/JadwalPage';
+import DetailKegiatanPage  from './pages/jemaatpublik/DetailKegiatanPage';
 
 // --- AUTH ---
 import LoginPage from './pages/auth/LoginPage';
@@ -21,35 +22,38 @@ import KontenPage    from './pages/pendeta/KontenPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
-    return (
-        <AuthProvider>
-            <Router>
-                <Routes>
-                    {/* ── RUTE PUBLIK ─────────────────────────────────── */}
-                    <Route element={<PublicLayout />}>
-                        <Route path="/"        element={<HomePage   />} />
-                        <Route path="/jadwal"  element={<JadwalPage />} />  {/* ← BARU */}
-                        {/* Tambahkan rute publik lain di sini (profil, pelayanan, galeri, kontak) */}
-                    </Route>
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
 
-                    {/* ── AUTH ────────────────────────────────────────── */}
-                    <Route path="/login" element={<LoginPage />} />
+          {/* ── RUTE PUBLIK (dengan Navbar + Footer) ──────────────────── */}
+          <Route element={<PublicLayout />}>
+            <Route path="/"                element={<HomePage           />} />
+            <Route path="/jadwal"          element={<JadwalPage         />} />
+            <Route path="/jadwal/:slug"    element={<DetailKegiatanPage />} />
+            {/* Tambahkan /profil, /pelayanan, /galeri, /kontak di sini */}
+          </Route>
 
-                    {/* ── RUTE PRIVAT: ADMIN ──────────────────────────── */}
-                    <Route element={<ProtectedRoute />}>
-                        <Route element={<AdminLayout />}>
-                            <Route path="/dashboard"          element={<DashboardPage />} />
-                            <Route path="/dashboard/jemaat"   element={<JemaatPage    />} />
-                            <Route path="/dashboard/konten"   element={<KontenPage    />} />
-                        </Route>
-                    </Route>
+          {/* ── AUTH ──────────────────────────────────────────────────── */}
+          <Route path="/login" element={<LoginPage />} />
 
-                    {/* ── FALLBACK ─────────────────────────────────────── */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            </Router>
-        </AuthProvider>
-    );
+          {/* ── RUTE PRIVAT: ADMIN ────────────────────────────────────── */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AdminLayout />}>
+              <Route path="/dashboard"         element={<DashboardPage />} />
+              <Route path="/dashboard/jemaat"  element={<JemaatPage    />} />
+              <Route path="/dashboard/konten"  element={<KontenPage    />} />
+            </Route>
+          </Route>
+
+          {/* ── FALLBACK ──────────────────────────────────────────────── */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
 }
 
 export default App;

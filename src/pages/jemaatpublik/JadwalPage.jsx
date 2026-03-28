@@ -1,60 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // ─── DATA STATIS (ganti dengan API call nantinya) ────────────────────────────
 const JADWAL_RUTIN = [
-  { id: 1, hari: 'Minggu', jenis: 'Ibadah Umum',    waktu: '10:00', tempat: 'Gedung Utama' },
-  { id: 2, hari: 'Rabu',   jenis: 'Ibadah Doa',     waktu: '19:00', tempat: 'Aula Gereja'  },
-  { id: 3, hari: 'Jumat',  jenis: 'Ibadah Pemuda',  waktu: '18:30', tempat: 'Gedung Utama' },
-  { id: 4, hari: 'Sabtu',  jenis: 'Sekolah Minggu', waktu: '09:00', tempat: 'Ruang Kelas'  },
+  { id: 1, hari: 'Minggu', jenis: 'Ibadah Raya',           waktu: '10:00', tempat: 'Gedung Utama' },
+  { id: 2, hari: 'Rabu',   jenis: 'Ibadah Puasa',          waktu: '19:00', tempat: 'Aula Gereja'  },
+  { id: 3, hari: 'Jumat',  jenis: 'Ibadah Pemuda Remaja',  waktu: '18:30', tempat: 'Gedung Utama' },
+  { id: 4, hari: 'Sabtu',  jenis: 'Ibadah Rayon Kota',     waktu: '09:00', tempat: 'Ruang Kelas'  },
 ];
 
-const KEGIATAN_KHUSUS = [
+// Kategori dropdown — sesuai Figma (gambar 1)
+const KATEGORI_OPTIONS = [
+  'Semua Kegiatan',
+  'Ibadah Raya',
+  'Ibadah Pemuda Remaja',
+  'Ibadah Puasa',
+  'Ibadah Rayon Kota',
+  'Event Gereja',
+];
+
+export const KEGIATAN_KHUSUS = [
   {
     id: 1,
+    slug: 'perayaan-natal-bersama',
     judul: 'Perayaan Natal Bersama',
     tanggal: '25 Desember 2024',
-    deskripsi: 'Ibadah perayaan Natal bersama seluruh jemaat dan keluarga.',
-    detail:
-      'Hadir bersama keluarga dalam perayaan Natal yang penuh sukacita. Acara dimulai pukul 18.00 WIB dan diisi dengan drama musikal, paduan suara, serta pembagian bingkisan untuk anak-anak. Dresscode: Putih & Merah.',
+    deskripsiSingkat: 'Ibadah perayaan Natal bersama seluruh jemaat dan keluarga.',
+    deskripsiLengkap: `Dengan penuh sukacita, kami mengundang Bapak/Ibu, Saudara/i, serta seluruh jemaat untuk hadir dan bersama-sama merayakan Ibadah Perayaan Natal. Marilah kita datang dengan hati yang bersyukur untuk memuliakan Tuhan dan merayakan kelahiran Yesus Kristus sebagai Juruselamat dalam suasana penuh kasih, damai, dan pengharapan.
+
+Hari/Tanggal : 25 Desember
+Pukul : 20.00 WIB
+Tempat : Gereja GPdI
+
+Kiranya kehadiran kita semua menjadi berkat dan mempererat persekutuan iman.`,
   },
   {
     id: 2,
+    slug: 'retreat-pemuda',
     judul: 'Retreat Pemuda',
     tanggal: '10-12 Juli 2025',
-    deskripsi: 'Retreat rohani untuk pemuda gereja di luar kota.',
-    detail:
-      'Program retreat 3 hari 2 malam di Pusat Retret Bukit Doa, Puncak. Diisi sesi firman Tuhan, outbound rohani, dan persekutuan. Pendaftaran dibuka hingga 30 Juni 2025. Biaya Rp 350.000/orang.',
+    deskripsiSingkat: 'Retreat rohani untuk pemuda gereja di luar kota.',
+    deskripsiLengkap: `Program retreat selama 3 hari 2 malam di Pusat Retret Bukit Doa, Puncak. Diisi dengan sesi firman Tuhan, outbound rohani, dan persekutuan antar pemuda gereja.
+
+Hari/Tanggal : 10–12 Juli 2025
+Tempat : Pusat Retret Bukit Doa, Puncak
+Biaya : Rp 350.000/orang
+
+Pendaftaran dibuka hingga 30 Juni 2025. Segera daftarkan diri Anda ke sekretariat gereja.`,
   },
   {
     id: 3,
+    slug: 'bakti-sosial',
     judul: 'Bakti Sosial',
     tanggal: '15 Agustus 2025',
-    deskripsi: 'Kegiatan sosial membantu masyarakat yang membutuhkan.',
-    detail:
-      'Kegiatan meliputi pembagian sembako, pengobatan gratis, dan penyuluhan kesehatan untuk warga sekitar gereja. Jemaat yang ingin berpartisipasi dapat mendaftar ke sekretariat gereja.',
-  },
-];
+    deskripsiSingkat: 'Kegiatan sosial membantu masyarakat yang membutuhkan.',
+    deskripsiLengkap: `Kegiatan bakti sosial meliputi pembagian sembako, pengobatan gratis, dan penyuluhan kesehatan untuk warga sekitar gereja.
 
-const KATEGORI_OPTIONS = [
-  'Semua Kegiatan',
-  'Ibadah Umum',
-  'Ibadah Doa',
-  'Ibadah Pemuda',
-  'Sekolah Minggu',
+Hari/Tanggal : 15 Agustus 2025
+Tempat : Halaman Gereja GPdI dan sekitarnya
+Waktu : 08.00 WIB – selesai
+
+Jemaat yang ingin turut berpartisipasi sebagai relawan dapat mendaftar ke sekretariat gereja paling lambat 10 Agustus 2025.`,
+  },
 ];
 
 // ─── KOMPONEN UTAMA ──────────────────────────────────────────────────────────
 const JadwalPage = () => {
+  const navigate             = useNavigate();
   const [kategori, setKategori] = useState('Semua Kegiatan');
   const [cari, setCari]         = useState('');
-  const [modal, setModal]       = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') setModal(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
+  // Filter tabel
   const jadwalFiltered = JADWAL_RUTIN.filter((item) => {
     const matchKat  = kategori === 'Semua Kegiatan' || item.jenis === kategori;
     const q         = cari.toLowerCase();
@@ -69,7 +86,7 @@ const JadwalPage = () => {
     <div className="font-sans bg-white min-h-screen">
 
       {/* ══ JUDUL HALAMAN ══════════════════════════════════════════════════ */}
-      <div className="bg-white pt-10 pb-2 text-center px-4">
+      <div className="bg-white pt-10 pb-3 text-center px-4">
         <h1
           className="text-3xl md:text-4xl font-bold text-slate-900"
           style={{ fontFamily: "'Courier New', Courier, monospace" }}
@@ -82,18 +99,18 @@ const JadwalPage = () => {
       </div>
 
       {/* ══ PLACEHOLDER FOTO GEDUNG ════════════════════════════════════════ */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
         <div className="w-full h-52 md:h-64 bg-gray-200 flex items-center justify-center border border-gray-300">
           <span className="text-gray-500 text-sm">Placeholder (Foto Gedung)</span>
         </div>
       </div>
 
-      {/* ══ GARIS PEMISAH ═════════════════════════════════════════════════ */}
+      {/* ══ GARIS PEMISAH ══════════════════════════════════════════════════ */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <hr className="border-slate-300" />
       </div>
 
-      {/* ══ JADWAL IBADAH RUTIN ═══════════════════════════════════════════ */}
+      {/* ══ JADWAL IBADAH RUTIN ════════════════════════════════════════════ */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
         <h2
           className="text-lg md:text-xl font-bold text-center text-slate-900 mb-6"
@@ -104,27 +121,41 @@ const JadwalPage = () => {
 
         {/* ── Filter Row ─────────────────────────────────────────────────── */}
         <div className="flex flex-wrap gap-2 items-center mb-4">
-          {/* Dropdown */}
+
+          {/* Dropdown Kategori — custom agar mirip Figma */}
           <div className="relative">
-            <select
-              value={kategori}
-              onChange={(e) => setKategori(e.target.value)}
-              className="appearance-none pl-3 pr-8 py-2 border border-slate-400 text-sm text-slate-700 bg-white cursor-pointer focus:outline-none"
-              style={{ minWidth: 160 }}
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="flex items-center gap-2 pl-3 pr-2 py-2 border border-slate-400 bg-white text-sm text-slate-700 min-w-[165px] justify-between focus:outline-none"
             >
-              {KATEGORI_OPTIONS.map((k) => (
-                <option key={k} value={k}>{k}</option>
-              ))}
-            </select>
-            <svg
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
+              <span>{kategori}</span>
+              <svg
+                className={`w-4 h-4 text-slate-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {/* Daftar Dropdown */}
+            {dropdownOpen && (
+              <div className="absolute top-full left-0 z-30 w-52 bg-white border border-slate-300 shadow-md">
+                {KATEGORI_OPTIONS.map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => { setKategori(k); setDropdownOpen(false); }}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-100 transition ${
+                      kategori === k ? 'bg-slate-100 font-semibold text-slate-900' : 'text-slate-700'
+                    }`}
+                  >
+                    {k}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Input */}
+          {/* Input Cari */}
           <input
             type="text"
             value={cari}
@@ -134,7 +165,10 @@ const JadwalPage = () => {
           />
 
           {/* Tombol Search */}
-          <button className="px-3 py-2 border border-slate-400 bg-slate-200 hover:bg-slate-300 transition">
+          <button
+            onClick={() => setDropdownOpen(false)}
+            className="px-3 py-2 border border-slate-400 bg-slate-200 hover:bg-slate-300 transition"
+          >
             <svg className="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -148,7 +182,7 @@ const JadwalPage = () => {
             <thead className="border-b border-slate-300 bg-white">
               <tr>
                 {['Hari', 'Jenis Ibadah', 'Waktu', 'Tempat'].map((h) => (
-                  <th key={h} className="px-4 py-2 font-bold text-slate-800 text-xs">
+                  <th key={h} className="px-4 py-2 font-bold text-slate-800 text-xs uppercase">
                     {h}
                   </th>
                 ))}
@@ -176,7 +210,7 @@ const JadwalPage = () => {
         </div>
       </section>
 
-      {/* Ruang kosong — persis Figma ada gap besar antara tabel & kegiatan */}
+      {/* Gap besar antara tabel dan kegiatan khusus — persis Figma */}
       <div className="h-24" />
 
       {/* ══ KEGIATAN KHUSUS / EVENT GEREJA ════════════════════════════════ */}
@@ -194,7 +228,7 @@ const JadwalPage = () => {
               key={item.id}
               className="border border-slate-300 bg-slate-100 p-6"
             >
-              {/* Judul — italic bold Georgia, persis Figma */}
+              {/* Judul italic bold Georgia */}
               <h3
                 className="text-xl font-bold italic text-slate-900 mb-4"
                 style={{ fontFamily: "'Georgia', serif" }}
@@ -208,12 +242,12 @@ const JadwalPage = () => {
               </p>
               <p className="text-sm md:text-base mb-5">
                 <strong className="font-bold italic">Deskripsi</strong>
-                <span className="italic"> :  {item.deskripsi}</span>
+                <span className="italic"> :  {item.deskripsiSingkat}</span>
               </p>
 
-              {/* Tombol Detail — persis Figma: kotak border hitam */}
+              {/* Tombol Detail → navigasi ke halaman detail */}
               <button
-                onClick={() => setModal(item)}
+                onClick={() => navigate(`/jadwal/${item.slug}`)}
                 className="px-5 py-2 border border-slate-800 bg-white text-slate-800 text-sm font-semibold hover:bg-slate-800 hover:text-white transition-all duration-200"
               >
                 Detail
@@ -223,71 +257,19 @@ const JadwalPage = () => {
         </div>
       </section>
 
-      {/* ══ CATATAN ═══════════════════════════════════════════════════════ */}
+      {/* ══ CATATAN ════════════════════════════════════════════════════════ */}
       <div className="py-10 text-center">
         <p className="text-slate-500 text-sm italic">
           Catatan : Jadwal dapat berubah sesuai pengumuman gereja
         </p>
       </div>
 
-      {/* ══ MODAL DETAIL ══════════════════════════════════════════════════ */}
-      {modal && (
+      {/* Tutup dropdown jika klik di luar */}
+      {dropdownOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-          onClick={() => setModal(null)}
-        >
-          <div
-            className="bg-white shadow-2xl w-full max-w-md overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="bg-slate-800 px-6 py-4 flex items-center justify-between">
-              <h3
-                className="text-lg font-bold italic text-white"
-                style={{ fontFamily: "'Georgia', serif" }}
-              >
-                {modal.judul}
-              </h3>
-              <button
-                onClick={() => setModal(null)}
-                className="text-white/70 hover:text-white transition"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Body */}
-            <div className="p-6 space-y-4">
-              <p className="text-sm">
-                <strong className="font-bold italic">Tanggal</strong>
-                <span className="italic text-slate-600"> : {modal.tanggal}</span>
-              </p>
-              <p className="text-sm">
-                <strong className="font-bold italic">Deskripsi</strong>
-                <span className="italic text-slate-600"> :  {modal.deskripsi}</span>
-              </p>
-              <div className="bg-slate-50 border border-slate-200 p-4">
-                <p className="text-sm font-semibold text-slate-700 mb-2">Detail Kegiatan:</p>
-                <p className="text-sm text-slate-600 leading-relaxed">{modal.detail}</p>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="px-6 pb-6 flex justify-end gap-3">
-              <button
-                onClick={() => setModal(null)}
-                className="px-5 py-2 text-sm font-semibold border border-slate-400 text-slate-600 hover:bg-slate-100 transition"
-              >
-                Tutup
-              </button>
-              <button className="px-5 py-2 text-sm font-bold text-white bg-slate-800 hover:bg-slate-700 transition">
-                Daftar Sekarang
-              </button>
-            </div>
-          </div>
-        </div>
+          className="fixed inset-0 z-20"
+          onClick={() => setDropdownOpen(false)}
+        />
       )}
     </div>
   );
