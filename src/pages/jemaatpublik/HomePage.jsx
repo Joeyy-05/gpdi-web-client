@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 // Impor gambar jika ada di folder assets
 // import heroBg from '../assets/hero_bg.jpg';
 // import ibadahRayaImg from '../assets/ibadah_raya.jpg';

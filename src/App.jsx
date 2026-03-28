@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import JadwalPage from './pages/jemaatpublik/JadwalPage';
 
 // --- IMPOR LAYOUT ---
 import PublicLayout from './layouts/PublicLayout';
@@ -44,6 +45,8 @@ function App() {
                             <Route path="/dashboard/konten" element={<KontenPage />} />
                         </Route>
                     </Route>
+                    
+                   <Route path="/jadwal" element={<JadwalPage />} />
 
                     {/* --- 4. RUTE PRIVAT: JEMAAT & KETUA RAYON (Persiapan) --- */}
                     {/* Nanti kita buat ProtectedRoute khusus yang mengecek Role untuk rute di bawah ini */}
