@@ -1,8 +1,12 @@
-import { Link, NavLink } from "react-router-dom";
-import logo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.jpg";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import logo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.png";
 import { Bell } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 export default function JemaatNavbar() {
+  const { user, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
   const navItems = [
     { label: "Renungan Harian", path: "/renungan" },
     { label: "Manajemen Ibadah Rayon", path: "/ibadah-rayon" },
@@ -10,28 +14,37 @@ export default function JemaatNavbar() {
     { label: "Pengumuman", path: "/pengumuman" },
   ];
 
-  return (
-    <header className="w-full bg-[#1E1B8F] text-white">
-      <div className="mx-auto flex h-[64px] max-w-[1440px] items-center justify-between px-6">
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
-        {/* Left: Logo + Nama */}
+  return (
+    <header className="w-full bg-[#0D1282] text-white">
+      <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-8">
+        
+        {/* LEFT */}
         <div className="flex items-center gap-3">
-          <img src={logo} alt="Logo GPdI" className="h-10 w-10 object-contain" />
-          <span className="text-sm font-medium">
+          <img
+            src={logo}
+            alt="Logo GPdI"
+            className="h-9 w-9 object-contain"
+          />
+          <span className="text-[13px] font-medium whitespace-nowrap">
             Gereja Pantekosta di Indonesia
           </span>
         </div>
 
-        {/* Center: Menu */}
-        <nav className="hidden lg:flex items-center gap-6">
+        {/* CENTER */}
+        <nav className="hidden lg:flex items-center gap-8">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `text-sm transition ${
+                `text-[13px] transition ${
                   isActive
-                    ? "font-bold text-white"
+                    ? "font-semibold text-white"
                     : "text-white/80 hover:text-white"
                 }`
               }
@@ -41,15 +54,29 @@ export default function JemaatNavbar() {
           ))}
         </nav>
 
-        {/* Right: User */}
-        <div className="flex items-center gap-4">
-          <Bell size={20} />
+        {/* RIGHT */}
+        <div className="flex items-center gap-6">
+          <Bell size={20} strokeWidth={1.8} />
 
-          <span className="text-sm">Nama User</span>
+          <span className="text-[13px] whitespace-nowrap">
+            {user?.name || "Nama User"}
+          </span>
 
-          <button className="rounded-full bg-red-600 px-4 py-1.5 text-xs font-bold hover:bg-red-700">
-            LOGOUT
-          </button>
+          {isAuthenticated ? (
+            <button
+              onClick={handleLogout}
+              className="rounded-full bg-[#D71313] px-5 py-[6px] text-[12px] font-bold text-black hover:opacity-90"
+            >
+              LOGOUT
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="rounded-full bg-blue-600 px-5 py-[6px] text-[12px] font-bold"
+            >
+              LOGIN
+            </Link>
+          )}
         </div>
       </div>
     </header>

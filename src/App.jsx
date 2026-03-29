@@ -31,6 +31,10 @@ import KontenPage from "./pages/pendeta/KontenPage";
 
 // --- IMPOR HALAMAN LAINNYA NANTI DI SINI ---
 // import JemaatDashboard from './pages/jemaat/JemaatDashboard';
+import PengumumanJemaat from "./pages/jemaat/PengumumanJemaat";
+import RenunganPage from "./pages/jemaat/RenunganPage";
+import JadwalIbadahRayonPage from "./pages/jemaat/JadwalIbadahRayonPage";
+import RequestSuratPage from "./pages/jemaat/RequestSuratPage";
 // import KetuaRayonDashboard from './pages/ketuarayon/KetuaRayonDashboard';
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -40,15 +44,28 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* --- 1. RUTE PUBLIK (jemaatpublik) --- */}
-          <Route element={<PublicLayout />}>
+          {/* --- 1. RUTE JEMAAT (Tampilan Member Tanpa Login) --- */}
+          <Route element={<JemaatLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/profil-gereja" element={<ProfilGerejaPage />} />
             <Route path="/jadwal-ibadah" element={<JadwalPage />} />
             <Route path="/pelayanan" element={<PelayananPage />} />
             <Route path="/galeri-kegiatan" element={<GaleriKegiatanPage />} />
-            <Route path="/pengumuman" element={<PengumumanPage />} />
+            <Route path="/pengumuman" element={<PengumumanJemaat />} />
+            <Route
+              path="/pengumuman/:slug"
+              element={<div>Detail Pengumuman (Placeholder)</div>}
+            />
             <Route path="/kontak" element={<KontakPage />} />
+
+            {/* Rute-rute tambahan jemaat */}
+            <Route path="/renungan" element={<RenunganPage />} />
+            <Route
+              path="/renungan/:id"
+              element={<div>Detail Renungan (Placeholder)</div>}
+            />
+            <Route path="/ibadah-rayon" element={<JadwalIbadahRayonPage />} />
+            <Route path="/request-surat" element={<RequestSuratPage />} />
           </Route>
 
           {/* --- 2. RUTE AUTENTIKASI --- */}
@@ -60,28 +77,6 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/dashboard/jemaat" element={<JemaatPage />} />
               <Route path="/dashboard/konten" element={<KontenPage />} />
-            </Route>
-          </Route>
-
-          {/* --- 4. RUTE PRIVAT: JEMAAT & KETUA RAYON (Persiapan) --- */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<JemaatLayout />}>
-              {/* Rute-rute yang menggunakan JemaatNavbar dan JemaatFooter */}
-              <Route
-                path="/renungan"
-                element={<div>Halaman Renungan Harian (Placeholder)</div>}
-              />
-              <Route
-                path="/ibadah-rayon"
-                element={
-                  <div>Halaman Manajemen Ibadah Rayon (Placeholder)</div>
-                }
-              />
-              <Route
-                path="/request-surat"
-                element={<div>Halaman Request Surat (Placeholder)</div>}
-              />
-              <Route path="/jemaat/pengumuman" element={<PengumumanPage />} />
             </Route>
           </Route>
 

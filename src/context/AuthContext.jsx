@@ -28,6 +28,9 @@ export const AuthProvider = ({ children }) => {
         };
 
         initializeAuth();
+        // Untuk pengerjaan UI tanpa backend, pastikan loading selesai
+        const timeout = setTimeout(() => setIsLoading(false), 1000);
+        return () => clearTimeout(timeout);
     }, []);
 
     const login = (token, userData) => {
