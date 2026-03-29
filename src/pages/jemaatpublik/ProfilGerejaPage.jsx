@@ -1,18 +1,14 @@
-const pengakuanIman = [
-  'Kami percaya Alkitab adalah Firman Allah yang diilhamkan oleh Roh Kudus terdiri dari 66 buku: "Kejadian sampai dengan Wahyu" (2 Tim. 3:16; 2 Ptr. 1:21).',
-  'Kami percaya Allah Yang Maha Esa dan kekal dalam wujud Trinitas: "BAPA dan PUTERA dan ROH KUDUS", (Ul. 6:4; 1 Tim. 2:5; 1 Yoh. 5:7; Mat. 28:19). Keesaan namaNya yaitu: "TUHAN YESUS – KRISTUS", (Kis. 2:3; 8:12; 10:48; Mat. 1:1; Why. 22:20-21; Kis. 19:5; 1 Ptr. 3:15)',
-  "Kami percaya Allah pencipta alam semesta dan manusia, seperti tertulis dalam Kitab Kejadian (Kej. 1 dan 2; Yoh. 1:1-3; Kol. 1:16; Rm. 4:17; 1:19-20).",
-  "Kami percaya Tuhan Yesus Kristus, Anak Allah yang telah menjadi manusia, dilahirkan Perawan Maria yang mengandung oleh Roh Kudus, mati disalib menanggung dosa manusia, dikuburkan, bangkit, naik ke sorga dan akan datang kembali (Yoh. 20:31; Rm. 1:4; 1 Yoh. 4:15; Yoh. 1:14; Flp. 2:7- 8; 1 Tim. 3:16; Mat. 1:18; Yes. 7:14; Luk. 1:35; 1 Tim. 1:15; Kis. 4:1-12; 10:42-43; Rm. 6:4; 1 Kor. 15:3- 4; 1 Tes. 4:15, 17).",
-];
-
-const strukturPelayanan = [
-  "Gembala/Pendeta",
-  "Wakil/Majelis",
-  "Koordinator Pelayanan",
-  "Pelayan",
-];
+import React, { useState } from "react";
+import {
+  pengakuanIman,
+  strukturPelayanan,
+  profilContent,
+} from "../../data/profilData";
 
 export default function ProfilGerejaPage() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const displayedIman = isExpanded ? pengakuanIman : pengakuanIman.slice(0, 4);
+
   return (
     <div
       className="min-h-screen bg-white text-black"
@@ -101,16 +97,19 @@ export default function ProfilGerejaPage() {
                 Pengakuan Iman
               </h2>
 
-              <ol className="mt-[34px] space-y-[16px] text-left text-[16px] leading-[1.45] text-black">
-                {pengakuanIman.map((item, index) => (
-                  <li key={index} className="list-decimal">
+              <ol className="mt-[34px] space-y-[16px] list-decimal list-inside text-left text-[16px] leading-[1.45] text-black">
+                {displayedIman.map((item, index) => (
+                  <li key={index}>
                     <span>{item}</span>
                   </li>
                 ))}
               </ol>
 
-              <button className="mt-[42px] rounded-[18px] bg-[#D71313] px-[34px] py-[12px] text-[18px] font-normal text-black">
-                Baca Selengkapnya
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="mt-[42px] rounded-[18px] bg-[#D71313] px-[34px] py-[12px] text-[18px] font-normal text-white transition hover:bg-[#b51010]"
+              >
+                {isExpanded ? "Tutup" : "Baca Selengkapnya"}
               </button>
             </div>
           </section>
