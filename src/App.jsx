@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext";
 // --- IMPOR LAYOUT ---
 import PublicLayout from "./layouts/PublicLayout";
 import AdminLayout from "./layouts/AdminLayout"; // (Layout ini khusus untuk Pendeta/Admin)
+import JemaatLayout from "./layouts/JemaatLayout";
 
 // --- IMPOR HALAMAN JEMAAT PUBLIK ---
 import HomePage from "./pages/jemaatpublik/HomePage";
@@ -63,15 +64,26 @@ function App() {
           </Route>
 
           {/* --- 4. RUTE PRIVAT: JEMAAT & KETUA RAYON (Persiapan) --- */}
-          {/* Nanti kita buat ProtectedRoute khusus yang mengecek Role untuk rute di bawah ini */}
-          {/* <Route element={<ProtectedRoute allowedRoles={['jemaat']} />}>
-                        <Route path="/jemaat/dashboard" element={<JemaatDashboard />} />
-                    </Route>
-
-                    <Route element={<ProtectedRoute allowedRoles={['ketua_rayon']} />}>
-                        <Route path="/rayon/dashboard" element={<KetuaRayonDashboard />} />
-                    </Route> 
-                    */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<JemaatLayout />}>
+              {/* Rute-rute yang menggunakan JemaatNavbar dan JemaatFooter */}
+              <Route
+                path="/renungan"
+                element={<div>Halaman Renungan Harian (Placeholder)</div>}
+              />
+              <Route
+                path="/ibadah-rayon"
+                element={
+                  <div>Halaman Manajemen Ibadah Rayon (Placeholder)</div>
+                }
+              />
+              <Route
+                path="/request-surat"
+                element={<div>Halaman Request Surat (Placeholder)</div>}
+              />
+              <Route path="/jemaat/pengumuman" element={<PengumumanPage />} />
+            </Route>
+          </Route>
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
