@@ -1,22 +1,51 @@
-import React from 'react';
+export default function PublicFooter() {
+  return (
+    <footer
+      className="bg-[#F3F3F3] px-5 pb-6 pt-8"
+      style={{ fontFamily: "Montserrat, sans-serif" }}
+    >
+      <div className="mx-auto w-full max-w-[1400px]">
+        <div className="mx-auto flex min-h-[270px] w-full max-w-[1385px] flex-col items-center bg-[#E9E7E7] px-6 pt-10 text-center">
+          <h3 className="text-[22px] font-bold text-black">GPdI Sibulele</h3>
 
-const PublicFooter = () => {
-    return (
-        <footer className="bg-slate-900 text-white py-10 mt-auto font-sans">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div className="mb-6 flex justify-center items-center">
-                    {/* Ganti div ini dengan <img src={logoGPdI} alt="Logo GPdI" className="h-10 w-auto"/> nantinya */}
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xs">G</div>
-                    <span className="font-bold text-lg ml-3 tracking-tight">GPdI Sibulele</span>
-                </div>
-                <p className="text-slate-400 text-sm mb-2">Jl. Contoh No. 123, Sibulele, Sulawesi Tengah</p>
-                <p className="text-slate-400 text-sm mb-6">info@gpdisibulele.org | +62 123 4567 890</p>
-                <div className="border-t border-slate-700 pt-6 text-slate-500 text-xs">
-                    &copy; {new Date().getFullYear()} GPdI Jemaat Sibulele. Hak Cipta Dilindungi.
-                </div>
-            </div>
-        </footer>
-    );
-};
+          <p className="mt-4 text-[20px] font-bold text-black">
+            Jalan Contoh No.123, Kota A, Provinsi A, 12345
+          </p>
 
-export default PublicFooter;
+          <div className="mt-4 flex items-center gap-10">
+            <a
+              href="#"
+              className="flex h-[42px] w-[42px] items-center justify-center bg-[#3b5998] text-[28px] font-bold text-white"
+            >
+              f
+            </a>
+
+            <a
+              href="#"
+              className="flex h-[42px] w-[42px] items-center justify-center rounded-[8px] bg-gradient-to-br from-[#feda75] via-[#d62976] to-[#4f5bd5] text-[14px] font-bold text-white"
+            >
+              IG
+            </a>
+
+            <a
+              href="#"
+              className="flex h-[42px] w-[62px] items-center justify-center rounded-[10px] bg-[#ff0000] text-[18px] font-bold text-white"
+            >
+              ▶
+            </a>
+          </div>
+
+          <p className="mt-4 text-[18px] font-bold text-black">
+            Copyright © 2023
+          </p>
+        </div>
+
+        <div className="pt-8 text-center">
+          <p className="text-[20px] font-normal text-black">
+            © 2026 GPdI Jemaat Sibulele. All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
