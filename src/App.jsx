@@ -17,6 +17,7 @@ import ProfilGerejaPage from "./pages/jemaatpublik/ProfilGerejaPage";
 import PelayananPage from "./pages/jemaatpublik/PelayananPage";
 import GaleriKegiatanPage from "./pages/jemaatpublik/GaleriKegiatanPage";
 import PengumumanPage from "./pages/jemaatpublik/PengumumanPage";
+import JadwalPage from "./pages/jemaatpublik/JadwalPage";
 import KontakPage from "./pages/jemaatpublik/KontakPage";
 
 // --- IMPOR HALAMAN AUTH ---
@@ -42,6 +43,7 @@ function App() {
           <Route element={<PublicLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/profil-gereja" element={<ProfilGerejaPage />} />
+            <Route path="/jadwal-ibadah" element={<JadwalPage />} />
             <Route path="/pelayanan" element={<PelayananPage />} />
             <Route path="/galeri-kegiatan" element={<GaleriKegiatanPage />} />
             <Route path="/pengumuman" element={<PengumumanPage />} />

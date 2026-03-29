@@ -1,18 +1,14 @@
-const pengakuanIman = [
-  'Kami percaya Alkitab adalah Firman Allah yang diilhamkan oleh Roh Kudus terdiri dari 66 buku: "Kejadian sampai dengan Wahyu" (2 Tim. 3:16; 2 Ptr. 1:21).',
-  'Kami percaya Allah Yang Maha Esa dan kekal dalam wujud Trinitas: "BAPA dan PUTERA dan ROH KUDUS", (Ul. 6:4; 1 Tim. 2:5; 1 Yoh. 5:7; Mat. 28:19). Keesaan namaNya yaitu: "TUHAN YESUS – KRISTUS", (Kis. 2:3; 8:12; 10:48; Mat. 1:1; Why. 22:20-21; Kis. 19:5; 1 Ptr. 3:15)',
-  "Kami percaya Allah pencipta alam semesta dan manusia, seperti tertulis dalam Kitab Kejadian (Kej. 1 dan 2; Yoh. 1:1-3; Kol. 1:16; Rm. 4:17; 1:19-20).",
-  "Kami percaya Tuhan Yesus Kristus, Anak Allah yang telah menjadi manusia, dilahirkan Perawan Maria yang mengandung oleh Roh Kudus, mati disalib menanggung dosa manusia, dikuburkan, bangkit, naik ke sorga dan akan datang kembali (Yoh. 20:31; Rm. 1:4; 1 Yoh. 4:15; Yoh. 1:14; Flp. 2:7- 8; 1 Tim. 3:16; Mat. 1:18; Yes. 7:14; Luk. 1:35; 1 Tim. 1:15; Kis. 4:1-12; 10:42-43; Rm. 6:4; 1 Kor. 15:3- 4; 1 Tes. 4:15, 17).",
-];
-
-const strukturPelayanan = [
-  "Gembala/Pendeta",
-  "Wakil/Majelis",
-  "Koordinator Pelayanan",
-  "Pelayan",
-];
+import React, { useState } from "react";
+import {
+  pengakuanIman,
+  strukturPelayanan,
+  profilContent,
+} from "../../data/profilData";
 
 export default function ProfilGerejaPage() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const displayedIman = isExpanded ? pengakuanIman : pengakuanIman.slice(0, 4);
+
   return (
     <div
       className="min-h-screen bg-white text-black"
@@ -33,20 +29,24 @@ export default function ProfilGerejaPage() {
 
           {/* Banner */}
           <section className="mt-[48px] px-[22px]">
-            <div className="mx-auto flex h-[372px] w-full max-w-[1365px] items-center justify-center bg-[#D9D9D9]">
-              <span className="text-[18px] font-normal text-black">
-                Placeholder (Foto Gedung)
-              </span>
+            <div className="mx-auto h-[372px] w-full max-w-[1365px] overflow-hidden rounded-2xl bg-[#D9D9D9] shadow-lg">
+              <img
+                src={profilContent.gambarBanner}
+                alt="Gedung GPdI Sibulele"
+                className="h-full w-full object-cover"
+              />
             </div>
           </section>
 
           {/* Sejarah */}
           <section className="mt-[115px] px-[40px]">
             <div className="mx-auto grid w-full max-w-[1300px] grid-cols-1 items-start gap-x-[90px] gap-y-[40px] lg:grid-cols-[450px_1fr]">
-              <div className="flex justify-center lg:justify-start">
-                <div className="flex h-[420px] w-[430px] items-center justify-center bg-[#D9D9D9] text-center text-[16px] text-black">
-                  placeholder foto gedung lama
-                </div>
+              <div className="mx-auto h-[420px] w-full max-w-[430px] overflow-hidden rounded-2xl bg-[#D9D9D9] shadow-md lg:mx-0">
+                <img
+                  src={profilContent.gambarSejarah}
+                  alt="Sejarah Gereja"
+                  className="h-full w-full object-cover"
+                />
               </div>
 
               <div className="max-w-[690px]">
@@ -55,27 +55,9 @@ export default function ProfilGerejaPage() {
                 </h2>
 
                 <div className="mt-[14px] space-y-[8px] text-[16px] leading-[1.45] text-black">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit.
-                    Quisque faucibus ex sapien vitae pellentesque sem placerat.
-                    In id cursus mi pretium tellus duis convallis. Tempus leo eu
-                    aenean sed diam urna tempor. Pulvinar vivamus fringilla
-                    lacus nec metus bibendum egestas. Iaculis massa nisl
-                    malesuada lacinia integer nunc posuere. Ut hendrerit semper
-                    vel class aptent taciti sociosqu. Ad litora torquent per
-                    conubia nostra inceptos himenaeos.
-                  </p>
-
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit.
-                    Quisque faucibus ex sapien vitae pellentesque sem placerat.
-                    In id cursus mi pretium tellus duis convallis. Tempus leo eu
-                    aenean sed diam urna tempor. Pulvinar vivamus fringilla
-                    lacus nec metus bibendum egestas. Iaculis massa nisl
-                    malesuada lacinia integer nunc posuere. Ut hendrerit semper
-                    vel class aptent taciti sociosqu. Ad litora torquent per
-                    conubia nostra inceptos himenaeos.
-                  </p>
+                  {profilContent.sejarah.map((text, index) => (
+                    <p key={index}>{text}</p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -92,8 +74,7 @@ export default function ProfilGerejaPage() {
                 <h3 className="text-[20px] font-medium text-black">VISI</h3>
 
                 <p className="mt-[22px] max-w-[420px] text-[16px] leading-[1.45] text-black">
-                  Menjadi gereja yang bertumbuh dalam kasih, iman, dan
-                  pengharapan, serta menjadi berkat bagi komunitas sekitar.
+                  {profilContent.visi}
                 </p>
               </div>
 
@@ -101,10 +82,9 @@ export default function ProfilGerejaPage() {
                 <h3 className="text-[20px] font-medium text-black">MISI</h3>
 
                 <ul className="mt-[18px] w-full max-w-[430px] list-disc pl-5 text-left text-[16px] leading-[1.35] text-black">
-                  <li>Mengajarkan Firman Tuhan secara relevan.</li>
-                  <li>Membangun persekutuan yang erat antar jemaat.</li>
-                  <li>Melayani masyarakat dengan kasih Kristus.</li>
-                  <li>Mendorong pertumbuhan rohani setiap anggota.</li>
+                  {profilContent.misi.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -118,15 +98,18 @@ export default function ProfilGerejaPage() {
               </h2>
 
               <ol className="mt-[34px] space-y-[16px] text-left text-[16px] leading-[1.45] text-black">
-                {pengakuanIman.map((item, index) => (
+                {displayedIman.map((item, index) => (
                   <li key={index} className="list-decimal">
                     <span>{item}</span>
                   </li>
                 ))}
               </ol>
 
-              <button className="mt-[42px] rounded-[18px] bg-[#D71313] px-[34px] py-[12px] text-[18px] font-normal text-black">
-                Baca Selengkapnya
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="mt-[42px] rounded-[18px] bg-[#D71313] px-[34px] py-[12px] text-[18px] font-normal text-white transition hover:bg-[#b51010]"
+              >
+                {isExpanded ? "Tutup" : "Baca Selengkapnya"}
               </button>
             </div>
           </section>
