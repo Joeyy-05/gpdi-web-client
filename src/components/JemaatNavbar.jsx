@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.jpg";
+// import logo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.jpg";
 import { Bell } from "lucide-react";
 
 export default function JemaatNavbar() {
@@ -12,7 +12,7 @@ export default function JemaatNavbar() {
 
   return (
     <header className="w-full bg-[#1E1B8F] text-white">
-      <div className="mx-auto flex h-[64px] max-w-[1440px] items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-360 items-center justify-between px-6">
 
         {/* Left: Logo + Nama */}
         <div className="flex items-center gap-3">
