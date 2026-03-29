@@ -12,6 +12,7 @@ import JadwalPage          from './pages/jemaatpublik/JadwalPage';
 import DetailKegiatanPage  from './pages/jemaatpublik/DetailKegiatanPage';
 import PelayananPage       from './pages/jemaatpublik/PelayananPage';
 import DetailPelayananPage from './pages/jemaatpublik/DetailPelayananPage';
+import GaleriPage          from './pages/jemaatpublik/GaleriPage';
 
 // --- AUTH ---
 import LoginPage from './pages/auth/LoginPage';
@@ -29,13 +30,14 @@ function App() {
       <Router>
         <Routes>
 
-          {/* ── RUTE PUBLIK (dengan Navbar + Footer) ──────────────────── */}
+          {/* ── RUTE PUBLIK (dengan Navbar) ───────────────────────────── */}
           <Route element={<PublicLayout />}>
             <Route path="/"                element={<HomePage            />} />
             <Route path="/jadwal"          element={<JadwalPage          />} />
             <Route path="/jadwal/:slug"    element={<DetailKegiatanPage  />} />
             <Route path="/pelayanan"       element={<PelayananPage       />} />
             <Route path="/pelayanan/:slug" element={<DetailPelayananPage />} />
+            <Route path="/galeri"          element={<GaleriPage          />} />
           </Route>
 
           {/* ── AUTH ──────────────────────────────────────────────────── */}
