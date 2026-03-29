@@ -1,8 +1,23 @@
+import React, { useState } from "react";
+
 const pengakuanIman = [
-  'Kami percaya Alkitab adalah Firman Allah yang diilhamkan oleh Roh Kudus terdiri dari 66 buku: "Kejadian sampai dengan Wahyu" (2 Tim. 3:16; 2 Ptr. 1:21).',
-  'Kami percaya Allah Yang Maha Esa dan kekal dalam wujud Trinitas: "BAPA dan PUTERA dan ROH KUDUS", (Ul. 6:4; 1 Tim. 2:5; 1 Yoh. 5:7; Mat. 28:19). Keesaan namaNya yaitu: "TUHAN YESUS – KRISTUS", (Kis. 2:3; 8:12; 10:48; Mat. 1:1; Why. 22:20-21; Kis. 19:5; 1 Ptr. 3:15)',
-  "Kami percaya Allah pencipta alam semesta dan manusia, seperti tertulis dalam Kitab Kejadian (Kej. 1 dan 2; Yoh. 1:1-3; Kol. 1:16; Rm. 4:17; 1:19-20).",
-  "Kami percaya Tuhan Yesus Kristus, Anak Allah yang telah menjadi manusia, dilahirkan Perawan Maria yang mengandung oleh Roh Kudus, mati disalib menanggung dosa manusia, dikuburkan, bangkit, naik ke sorga dan akan datang kembali (Yoh. 20:31; Rm. 1:4; 1 Yoh. 4:15; Yoh. 1:14; Flp. 2:7- 8; 1 Tim. 3:16; Mat. 1:18; Yes. 7:14; Luk. 1:35; 1 Tim. 1:15; Kis. 4:1-12; 10:42-43; Rm. 6:4; 1 Kor. 15:3- 4; 1 Tes. 4:15, 17).",
+  'Kami percaya Alkitab adalah Firman Allah yang diilhamkan oleh Roh Kudus terdiri dari 66 buku: "Kejadian sampai dengan Wahyu" (2 Tim. 3:16; 2 Pet. 1:21).',
+  'Kami percaya Allah Yang Maha Esa dan kekal dalam wujud Trinitas: "BAPA dan PUTERA dan ROH KUDUS", (Ul. 6:4; 1 Tim. 2:5; 1 Yoh. 5:7; Mat. 28:19). Keesaan nama-Nya yaitu: "TUHAN YESUS – KRISTUS", (Kis. 2:36; 8:12; 10:48; Mat. 1:1; Why. 22:20-21; Kis. 19:5; 1 Pet. 3:15).',
+  'Kami percaya Allah pencipta alam semesta dan manusia, seperti tertulis dalam Kitab Kejadian (Kej. 1 dan 2; Yoh. 1:1-3; Kol. 1:16; Rm. 4:17; 1:19-20).',
+  'Kami percaya Tuhan Yesus Kristus, Anak Allah yang telah menjadi manusia, dilahirkan Perawan Maria yang mengandung oleh Roh Kudus, mati disalib menanggung dosa manusia, dikuburkan, bangkit, naik ke sorga dan akan datang kembali (Yoh. 20:31; Rm. 1:4; 1 Yoh. 4:15; Yoh. 1:14; Flp. 2:7-8; 1 Tim. 3:16; Mat. 1:18; Yes. 7:14; Luk. 1:35; 1 Tim. 1:15; Kis. 4:11-12; 10:42-43; Rm. 6:4; 1 Kor. 15:3-4; 1 Tes. 4:15, 17).',
+  'Kami percaya Roh Kudus adalah Pribadi Allah yang memiliki sifat: Kekal, Mahahadir, Mahakuasa, Mahatahu, Mahakudus, Mahakasih, dan baptisan Roh Kudus yaitu kepenuhan Roh Kudus dengan tanda berkata-kata dalam berbagai bahasa sebagaimana dianugerahkan oleh Roh Kudus diterima oleh orang percaya, bertobat dan lahir baru (1 Yoh. 5:7; 2 Kor. 13:13; Ibr. 9:14; Mzm. 139:7-10; Luk. 1:35; Kej. 1:2; Ayb. 26:13; Kis. 2:4; 10:45-46; 19:6; Mrk. 16:17; Yoh. 7:38-39).',
+  'Kami percaya baptisan air, yaitu diselamkan dalam nama Bapa dan Putera dan Roh Kudus, yaitu Tuhan Yesus Kristus wajib dilakukan bagi mereka yang diselamatkan yaitu percaya, bertobat dan lahir baru, untuk menggenapkan kebenaran Allah. (Mrk. 16:15-16; Kis. 2:38; 8:12,37 dan 39; Mat. 3:15; 28:19; Mrk. 1:15).',
+  'Kami percaya keselamatan orang berdosa, roh, jiwa dan tubuh, oleh anugerah dan iman kepada Tuhan Yesus Kristus, dan semua orang percaya harus mempertahankan keselamatan, kekudusan, kesetiaan dan apabila tidak memeliharanya, keselamatan itu dapat hilang. (Ef. 2:8-9; Rm. 10:9-10; 1 Kor. 1:18; Flp. 2:12; Mat. 24:13; Ibr. 3:12; 2 Pet. 2:20-22; 1:4-11; Yud. 1:3).',
+  'Kami percaya peranan karunia-karunia Roh Kudus dalam jemaat. (1 Kor. 12:4-11; 14:26).',
+  'Kami percaya Perjamuan Tuhan yang lazim disebut Perjamuan Kudus harus diterima oleh mereka yang percaya. (Luk. 22:19-20; 1 Kor. 11:23-26; Yoh. 6:53-56).',
+  'Kami percaya kesembuhan Allah atas segala penyakit oleh bilur-bilur Yesus dalam kuasa nama-Nya. (Yes. 53:4; 1 Pet. 2:24; Kis. 4:30; Mrk. 16:18).',
+  'Kami percaya penyerahan anak-anak adalah kehendak Tuhan. (Luk. 2:22-27; Mat. 19:13-15; Mrk. 10:13-16; Luk. 18:15-17).',
+  'Kami percaya Gereja Tuhan yang esa, persekutuan orang-orang percaya, kudus dan sempurna sebagai Mempelai Perempuan, disingkirkan selama masa tiga setengah tahun tribulasi, diubahkan dan diangkat pada kedatangan kembali Tuhan Yesus. (Yoh. 17:21-23; Ef. 4:12-16; 1 Tes. 5:23; 1 Pet. 5:10; 1 Tes. 5:4; 1 Kor. 15:51).',
+  'Kami percaya Tuhan Yesus Kristus sebagai Mempelai Laki-laki, Raja atas segala raja dan Tuan atas segala tuan, yang akan datang untuk menghukum isi dunia dengan adil, dan akan memerintah dalam Kerajaan Seribu Tahun Damai bersama Mempelai Perempuan yaitu Gereja-Nya. (Kis. 1:11; Why. 22:7; 1 Kor. 15:24-25; 1 Tes. 4:16-17; 2 Tes. 1:7,9; Why. 20:10-15; Why. 19:11-16; 1 Tim. 6:15).',
+  'Kami percaya kebangkitan orang-orang kudus sebelum Kerajaan Seribu Tahun Damai dan kebangkitan orang-orang berdosa sesudah Kerajaan itu; orang kudus akan menerima hidup kekal, orang berdosa akan menghadap takhta Allah untuk menerima penghukuman kekal dalam lautan api (Why. 20:1-15; 1 Tes. 4:16-17).',
+  'Kami percaya langit dan bumi baru yang berisi Kebenaran, tempat kediaman kekal umat tebusan darah Kristus (1 Pet. 1:18-19; 2 Pet. 3:13; Why. 21:1-18).',
+  'Kami percaya pertemuan-pertemuan ibadah, wajib dilaksanakan secara tetap dengan khidmat dan suci. (Kis. 2:25; Kel. 23:25; Ibr. 10:25; Mzm. 47:2; 100:1-5; 134:2; 150:1-5).',
+  'Kami percaya setiap pemerintah adalah hamba Allah yang ditetapkan Allah. (Rm. 13:4; 1 Pet. 2:17; 1 Tim. 2:1-2; Ams. 21:1).',
 ];
 
 const strukturPelayanan = [
@@ -13,6 +28,8 @@ const strukturPelayanan = [
 ];
 
 export default function ProfilGerejaPage() {
+  const [showFull, setShowFull] = useState(false);
+
   return (
     <div
       className="min-h-screen bg-white text-black"
@@ -118,15 +135,18 @@ export default function ProfilGerejaPage() {
               </h2>
 
               <ol className="mt-[34px] space-y-[16px] text-left text-[16px] leading-[1.45] text-black">
-                {pengakuanIman.map((item, index) => (
+                {(showFull ? pengakuanIman : pengakuanIman.slice(0, 4)).map((item, index) => (
                   <li key={index} className="list-decimal">
                     <span>{item}</span>
                   </li>
                 ))}
               </ol>
 
-              <button className="mt-[42px] rounded-[18px] bg-[#D71313] px-[34px] py-[12px] text-[18px] font-normal text-black">
-                Baca Selengkapnya
+              <button
+                onClick={() => setShowFull(!showFull)}
+                className="mt-[42px] rounded-[18px] bg-[#D71313] px-[34px] py-[12px] text-[18px] font-normal text-black"
+              >
+                {showFull ? "Sembunyikan" : "Baca Selengkapnya"}
               </button>
             </div>
           </section>
