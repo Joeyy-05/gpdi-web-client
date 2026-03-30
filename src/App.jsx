@@ -36,6 +36,7 @@ import PengumumanJemaat from "./pages/jemaat/PengumumanJemaat";
 import RenunganPage from "./pages/jemaat/RenunganPage";
 import JadwalIbadahRayonPage from "./pages/jemaat/JadwalIbadahRayonPage";
 import RequestSuratPage from "./pages/jemaat/RequestSuratPage";
+import ProfilPage from "./pages/jemaat/ProfilPage";
 // import KetuaRayonDashboard from './pages/ketuarayon/KetuaRayonDashboard';
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -60,6 +61,7 @@ function App() {
               element={<div>Detail Pengumuman (Placeholder)</div>}
             />
             <Route path="/kontak" element={<KontakPage />} />
+            <Route path="/profil" element={<ProfilPage />} />
 
             {/* Rute-rute tambahan jemaat */}
             <Route path="/renungan" element={<RenunganPage />} />

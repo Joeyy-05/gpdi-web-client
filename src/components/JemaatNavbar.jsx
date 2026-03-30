@@ -9,6 +9,7 @@ export default function JemaatNavbar() {
 
   const navItems = [
     { label: "Semua Halaman", path: "/" },
+    { label: "Profil Saya", path: "/profil" },
     { label: "Renungan Harian", path: "/renungan" },
     { label: "Manajemen Ibadah Rayon", path: "/manajemen-ibadah-rayon" },
     { label: "Request Surat", path: "/request-surat" },

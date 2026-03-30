@@ -12,6 +12,11 @@ const pages = [
     description: "Informasi profil gereja",
   },
   {
+    title: "Profil Saya",
+    path: "/profil",
+    description: "Halaman profil jemaat",
+  },
+  {
     title: "Jadwal Ibadah",
     path: "/jadwal-ibadah",
     description: "Jadwal kegiatan jemaat",
