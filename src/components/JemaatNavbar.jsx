@@ -8,8 +8,9 @@ export default function JemaatNavbar() {
   const navigate = useNavigate();
 
   const navItems = [
+    { label: "Semua Halaman", path: "/" },
     { label: "Renungan Harian", path: "/renungan" },
-    { label: "Manajemen Ibadah Rayon", path: "/ibadah-rayon" },
+    { label: "Manajemen Ibadah Rayon", path: "/manajemen-ibadah-rayon" },
     { label: "Request Surat", path: "/request-surat" },
     { label: "Pengumuman", path: "/pengumuman" },
   ];
@@ -22,14 +23,9 @@ export default function JemaatNavbar() {
   return (
     <header className="w-full bg-[#0D1282] text-white">
       <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-8">
-        
         {/* LEFT */}
         <div className="flex items-center gap-3">
-          <img
-            src={logo}
-            alt="Logo GPdI"
-            className="h-9 w-9 object-contain"
-          />
+          <img src={logo} alt="Logo GPdI" className="h-9 w-9 object-contain" />
           <span className="text-[13px] font-medium whitespace-nowrap">
             Gereja Pantekosta di Indonesia
           </span>
