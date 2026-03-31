@@ -28,7 +28,7 @@ const AdminLayout = () => {
                     <p className="px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Menu Utama</p>
                     <ul className="space-y-1">
                         <li>
-                            <Link to="/dashboard" className={`block px-6 py-3 hover:bg-slate-800 transition whitespace-nowrap ${isActive('/dashboard') ? 'bg-blue-600 border-l-4 border-blue-400 text-white' : 'text-slate-300'}`}>Dashboard</Link>
+                            <Link to="/dashboard" className={`block px-6 py-3 hover:bg-slate-800 transition whitespace-nowrap ${location.pathname === '/dashboard' ? 'bg-blue-600 border-l-4 border-blue-400 text-white' : 'text-slate-300'}`}>Dashboard</Link>
                         </li>
                         <li>
                             <Link to="/dashboard/jemaat" className={`block px-6 py-3 hover:bg-slate-800 transition whitespace-nowrap ${isActive('/dashboard/jemaat') ? 'bg-blue-600 border-l-4 border-blue-400 text-white' : 'text-slate-300'}`}>Manajemen Jemaat</Link>
@@ -39,9 +39,7 @@ const AdminLayout = () => {
                         <li>
                             <Link to="/dashboard/jadwal" className={`block px-6 py-3 hover:bg-slate-800 transition whitespace-nowrap ${isActive('/dashboard/jadwal') ? 'bg-blue-600 border-l-4 border-blue-400 text-white' : 'text-slate-300'}`}>Jadwal & Rayon</Link>
                         </li>
-                        <li>
-                            <Link to="/dashboard/surat" className={`block px-6 py-3 hover:bg-slate-800 transition whitespace-nowrap ${isActive('/dashboard/surat') ? 'bg-blue-600 border-l-4 border-blue-400 text-white' : 'text-slate-300'}`}>Administrasi Surat</Link>
-                        </li>
+                        {/* Menu Administrasi & Utilitas telah dihapus sesuai permintaan */}
                     </ul>
                 </nav>
             </aside>
@@ -80,7 +78,7 @@ const AdminLayout = () => {
 
                 {/* PAGE CONTENT (Dinamic Area) */}
                 <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
-                    {/* Outlet adalah tempat di mana halaman spesifik (seperti DashboardPage) akan di-render */}
+                    {/* Outlet adalah tempat di mana halaman spesifik akan di-render */}
                     <Outlet />
                 </main>
             </div>
