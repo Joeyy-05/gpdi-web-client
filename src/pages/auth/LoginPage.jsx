@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginAPI } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
@@ -11,7 +11,20 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { login } = useAuth();
+  // PERBAIKAN 1: Ekstrak isAuthenticated dari context
+  // 1. Pastikan Anda juga mengekstrak 'user' dari useAuth
+  const { login, isAuthenticated, user } = useAuth();
+
+ // 2. Perbarui useEffect agar memeriksa role sebelum melempar (redirect)
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      if (user.role === 'pendeta' || user.role === 'admin') {
+        navigate("/dashboard");
+      } else {
+        navigate("/ibadah-rayon");
+      }
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,8 +36,16 @@ const LoginPage = () => {
       if (response.status === "success") {
         // Eksekusi fungsi login di Context untuk menyimpan token JWT
         login(response.data.access_token, response.data.user);
-        // Arahkan ke dashboard admin
-        navigate("/dashboard");
+        
+        // --- LOGIKA REDIRECT BERDASARKAN ROLE ---
+        const userRole = response.data.user.role;
+        
+        if (userRole === 'pendeta' || userRole === 'admin') {
+            navigate("/dashboard"); // Lempar ke Admin
+        } else {
+            // PERBAIKAN 3: Lempar ke Jadwal Ibadah Rayon sebagai Landing Page Jemaat
+            navigate("/ibadah-rayon"); 
+        }
       }
     } catch (error) {
       setErrorMsg(
@@ -43,7 +64,6 @@ const LoginPage = () => {
         <div
           className="absolute inset-0 bg-cover bg-center opacity-50"
           style={{
-            // Ganti URL ini dengan gambar asli (export dari Figma)
             backgroundImage:
               "url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop')",
           }}
