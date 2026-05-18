@@ -1,45 +1,46 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-// Impor logo jika ada di folder assets
-// import logoGPdI from '../assets/logo_gpdi.png';
+import { Link, NavLink } from "react-router-dom";
+// PERBAIKAN: Mengimpor logo langsung dari folder assets
+import logo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.png";
+import { homeData } from "../data/homeData";
 
-const PublicNavbar = () => {
-    const navigate = useNavigate();
+export default function PublicNavbar() {
+  const navItems = [
+    { label: "Beranda", path: "/" },
+    { label: "Profil Gereja", path: "/profil-gereja" },
+    { label: "Jadwal Ibadah", path: "/jadwal-ibadah" },
+    { label: "Pelayanan", path: "/pelayanan" },
+    { label: "Galeri Kegiatan", path: "/galeri-kegiatan" },
+    { label: "Pengumuman", path: "/pengumuman" },
+    { label: "Kontak", path: "/kontak" },
+  ];
 
-    return (
-        <nav className="sticky top-0 z-50 w-full bg-white shadow-md font-sans">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-20">
-                    {/* Logo Area */}
-                    <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => navigate('/')}>
-                        {/* Ganti div ini dengan <img src={logoGPdI} alt="Logo GPdI" className="h-12 w-auto mr-3"/> nantinya */}
-                        <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-3 text-sm">G</div>
-                        <span className="font-bold text-xl text-slate-800 tracking-tight">GPdI Sibulele</span>
-                    </div>
+  return (
+    <header className="w-full bg-[#0D1282] text-white sticky top-0 z-50 shadow-md" style={{ fontFamily: "Montserrat, sans-serif" }}>
+      <div className="mx-auto flex h-[78px] w-full max-w-[1440px] items-center justify-between px-6 lg:px-10">
+        
+        <Link to="/" className="flex flex-shrink-0 items-center gap-3">
+          {/* PERBAIKAN: Menggunakan variabel logo, disesuaikan tampilannya dengan JemaatNavbar */}
+          <img src={logo} alt="Logo GPdI" className="h-[40px] w-[40px] object-contain rounded-full bg-white p-0.5" />
+          <span className="hidden text-[18px] font-bold sm:block">GPdI Sibulele</span>
+        </Link>
 
-                    {/* Navigation Links */}
-                    <div className="hidden md:flex space-x-6">
-                        <Link to="/" className="text-gray-700 hover:text-blue-600 font-semibold transition">Beranda</Link>
-                        <Link to="/profil" className="text-gray-600 hover:text-blue-600 font-medium transition">Profil</Link>
-                        <Link to="/pelayanan" className="text-gray-600 hover:text-blue-600 font-medium transition">Pelayanan</Link>
-                        <Link to="/jadwal" className="text-gray-600 hover:text-blue-600 font-medium transition">Jadwal</Link>
-                        <Link to="/galeri" className="text-gray-600 hover:text-blue-600 font-medium transition">Galeri</Link>
-                        <Link to="/kontak" className="text-gray-600 hover:text-blue-600 font-medium transition">Hubungi Kami</Link>
-                    </div>
-
-                    {/* Login Button */}
-                    <div className="hidden md:flex items-center">
-                        <button 
-                            onClick={() => navigate('/login')}
-                            className="px-6 py-2 rounded-md border-2 border-blue-600 text-blue-600 font-semibold hover:bg-blue-50 transition"
-                        >
-                            Masuk
-                        </button>
-                    </div>
-                </div>
-            </div>
+        {/* Menu Navigasi Murni Publik */}
+        <nav className="hidden flex-1 items-center justify-center gap-x-4 lg:flex xl:gap-x-6">
+          {navItems.map((item) => (
+            <NavLink key={item.path} to={item.path} className={({ isActive }) => `whitespace-nowrap text-[14px] transition-all py-2 border-b-2 ${isActive ? "font-bold border-white" : "font-medium border-transparent hover:border-white/50"}`}>
+              {item.label}
+            </NavLink>
+          ))}
         </nav>
-    );
-};
 
-export default PublicNavbar;
+        {/* Karena komponen ini hanya muncul saat BELUM login, kita hanya butuh tombol LOGIN */}
+        <div className="flex items-center gap-4">
+          <Link to="/login" className="rounded-full bg-[#D71313] px-6 py-2.5 text-[14px] font-bold transition hover:bg-[#b51010] shadow-sm">
+            LOGIN
+          </Link>
+        </div>
+
+      </div>
+    </header>
+  );
+}

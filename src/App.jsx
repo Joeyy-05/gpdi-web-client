@@ -4,22 +4,35 @@ import { AuthProvider } from './context/AuthContext';
 
 // --- IMPOR LAYOUT ---
 import PublicLayout from './layouts/PublicLayout';
-import AdminLayout from './layouts/AdminLayout'; // (Layout ini khusus untuk Pendeta/Admin)
+import AdminLayout from './layouts/AdminLayout'; 
+import JemaatLayout from './layouts/JemaatLayout'; 
 
-// --- IMPOR HALAMAN JEMAAT PUBLIK ---
+// --- IMPOR HALAMAN PUBLIK ---
 import HomePage from './pages/jemaatpublik/HomePage';
+import ProfilGerejaPage from './pages/jemaatpublik/ProfilGerejaPage';
+import JadwalPage from './pages/jemaatpublik/JadwalPage';
+import PelayananPage from './pages/jemaatpublik/PelayananPage';
+import GaleriKegiatanPage from './pages/jemaatpublik/GaleriKegiatanPage';
+import PengumumanPage from './pages/jemaatpublik/PengumumanPage';
+import KontakPage from './pages/jemaatpublik/KontakPage';
 
 // --- IMPOR HALAMAN AUTH ---
 import LoginPage from './pages/auth/LoginPage';
+
+// --- IMPOR HALAMAN JEMAAT AKTIF ---
+import RenunganPage from './pages/jemaat/RenunganPage';
+import JadwalIbadahRayonPage from './pages/jemaat/JadwalIbadahRayonPage';
+import PengumumanJemaatPage from './pages/jemaat/PengumumanJemaatPage';
+import RequestSuratPage from './pages/jemaat/RequestSuratPage';
+import ProfilPage from './pages/jemaat/ProfilPage';
+import ManajemenIbadahPage from './pages/jemaat/ManajemenIbadahPage'; // <-- TAMBAHAN IMPOR MANAJEMEN IBADAH
 
 // --- IMPOR HALAMAN PENDETA (ADMIN) ---
 import DashboardPage from './pages/pendeta/DashboardPage';
 import JemaatPage from './pages/pendeta/JemaatPage';
 import KontenPage from './pages/pendeta/KontenPage';
-
-// --- IMPOR HALAMAN LAINNYA NANTI DI SINI ---
-// import JemaatDashboard from './pages/jemaat/JemaatDashboard';
-// import KetuaRayonDashboard from './pages/ketuarayon/KetuaRayonDashboard';
+import JadwalRayonPage from './pages/pendeta/JadwalRayonPage';
+import AdministrasiPage from './pages/pendeta/AdministrasiPage';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 
@@ -28,35 +41,57 @@ function App() {
         <AuthProvider>
             <Router>
                 <Routes>
-                    {/* --- 1. RUTE PUBLIK (jemaatpublik) --- */}
+                    {/* ==========================================
+                        1. RUTE PUBLIK (Menggunakan PublicLayout)
+                        ========================================== */}
                     <Route element={<PublicLayout />}>
                         <Route path="/" element={<HomePage />} />
+                        <Route path="/profil-gereja" element={<ProfilGerejaPage />} />
+                        <Route path="/jadwal-ibadah" element={<JadwalPage />} />
+                        <Route path="/pelayanan" element={<PelayananPage />} />
+                        <Route path="/galeri-kegiatan" element={<GaleriKegiatanPage />} />
+                        <Route path="/pengumuman" element={<PengumumanPage />} />
+                        <Route path="/kontak" element={<KontakPage />} />
                     </Route>
 
-                    {/* --- 2. RUTE AUTENTIKASI --- */}
+                    {/* ==========================================
+                        2. RUTE AUTENTIKASI
+                        ========================================== */}
                     <Route path="/login" element={<LoginPage />} />
 
-                    {/* --- 3. RUTE PRIVAT: PENDETA (ADMIN) --- */}
+                    {/* ==========================================
+                        3. RUTE PRIVAT JEMAAT (Menggunakan JemaatLayout)
+                        ========================================== */}
+                    <Route element={<ProtectedRoute />}>
+                        <Route element={<JemaatLayout />}>
+                            {/* Halaman Khusus Jemaat */}
+                            <Route path="/renungan" element={<RenunganPage />} />
+                            <Route path="/ibadah-rayon" element={<JadwalIbadahRayonPage />} />
+                            <Route path="/request-surat" element={<RequestSuratPage />} />
+                            <Route path="/pengumuman-jemaat" element={<PengumumanJemaatPage />} />
+                            <Route path="/profil" element={<ProfilPage />} /> 
+                            
+                            {/* Halaman Khusus Ketua Rayon */}
+                            <Route path="/manajemen-ibadah" element={<ManajemenIbadahPage />} /> {/* <-- TAMBAHAN RUTE */}
+                        </Route>
+                    </Route>
+
+                    {/* ==========================================
+                        4. RUTE PRIVAT PENDETA / ADMIN (Menggunakan AdminLayout)
+                        ========================================== */}
                     <Route element={<ProtectedRoute />}>
                         <Route element={<AdminLayout />}>
                             <Route path="/dashboard" element={<DashboardPage />} />
                             <Route path="/dashboard/jemaat" element={<JemaatPage />} />
                             <Route path="/dashboard/konten" element={<KontenPage />} />
+                            <Route path="/dashboard/jadwal" element={<JadwalRayonPage />} />
+                            <Route path="/dashboard/administrasi" element={<AdministrasiPage />} />
                         </Route>
                     </Route>
 
-                    {/* --- 4. RUTE PRIVAT: JEMAAT & KETUA RAYON (Persiapan) --- */}
-                    {/* Nanti kita buat ProtectedRoute khusus yang mengecek Role untuk rute di bawah ini */}
-                    {/* <Route element={<ProtectedRoute allowedRoles={['jemaat']} />}>
-                        <Route path="/jemaat/dashboard" element={<JemaatDashboard />} />
-                    </Route>
-
-                    <Route element={<ProtectedRoute allowedRoles={['ketua_rayon']} />}>
-                        <Route path="/rayon/dashboard" element={<KetuaRayonDashboard />} />
-                    </Route> 
-                    */}
-
-                    {/* Fallback */}
+                    {/* ==========================================
+                        5. FALLBACK ROUTE (Pencegah Layar Blank)
+                        ========================================== */}
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </Router>

@@ -1,7 +1,10 @@
-import { homeData } from "../data/homeData";
+import React from "react";
+// Pastikan path import ini sesuai dengan lokasi fail JemaatFooter Anda
+import { homeData } from "../data/homeData"; 
 
-export default function PublicFooter() {
+export default function JemaatFooter() {
   const { gereja } = homeData;
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-[#F3F3F3] px-5 pb-6 pt-8" style={{ fontFamily: "Montserrat, sans-serif" }}>
@@ -17,7 +20,7 @@ export default function PublicFooter() {
           </div>
 
           <div className="mt-10 border-t border-gray-300 w-full pt-6">
-            <p className="text-[12px] text-gray-500">© 2026 GPdI Sibulele. All Rights Reserved. | <span className="font-bold text-[#0D1282]">Bersama Melayani Tuhan</span></p>
+            <p className="text-[12px] text-gray-500">© {currentYear} GPdI Sibulele. All Rights Reserved. | <span className="font-bold text-[#0D1282]">Bersama Melayani Tuhan</span></p>
           </div>
         </div>
       </div>
