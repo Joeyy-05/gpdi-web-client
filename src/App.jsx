@@ -7,6 +7,7 @@ import PublicLayout  from './layouts/PublicLayout';
 import AdminLayout   from './layouts/AdminLayout';
 import JemaatLayout  from './layouts/JemaatLayout';
 
+<<<<<<< Updated upstream
 // ── HALAMAN PUBLIK ───────────────────────────────────────────────────────────
 import HomePage            from './pages/jemaatpublik/HomePage';
 import JadwalPage          from './pages/jemaatpublik/JadwalPage';
@@ -14,6 +15,17 @@ import DetailKegiatanPage  from './pages/jemaatpublik/DetailKegiatanPage';
 import PelayananPage       from './pages/jemaatpublik/PelayananPage';
 import DetailPelayananPage from './pages/jemaatpublik/DetailPelayananPage';
 import GaleriPage          from './pages/jemaatpublik/GaleriPage';
+=======
+// --- IMPOR HALAMAN PUBLIK ---
+import HomePage from './pages/jemaatpublik/HomePage';
+import ProfilGerejaPage from './pages/jemaatpublik/ProfilGerejaPage';
+import JadwalPage from './pages/jemaatpublik/JadwalPage';
+import PelayananPage from './pages/jemaatpublik/PelayananPage';
+import GaleriKegiatanPage from './pages/jemaatpublik/GaleriKegiatanPage';
+import PengumumanPage from './pages/jemaatpublik/PengumumanPage';
+import KontakPage from './pages/jemaatpublik/KontakPage';
+import PendetaSeniorPage from './pages/jemaatpublik/PendetaSeniorPage';
+>>>>>>> Stashed changes
 
 // ── AUTH ─────────────────────────────────────────────────────────────────────
 import LoginPage from './pages/auth/LoginPage';
@@ -32,10 +44,30 @@ import RequestSuratPage from './pages/jemaat/RequestSuratPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
+<<<<<<< Updated upstream
   return (
     <AuthProvider>
       <Router>
         <Routes>
+=======
+    return (
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    {/* ==========================================
+                        1. RUTE PUBLIK (Menggunakan PublicLayout)
+                        ========================================== */}
+                    <Route element={<PublicLayout />}>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/profil-gereja" element={<ProfilGerejaPage />} />
+                        <Route path="/jadwal-ibadah" element={<JadwalPage />} />
+                        <Route path="/pelayanan" element={<PelayananPage />} />
+                        <Route path="/pendeta-senior" element={<PendetaSeniorPage />} />
+                        <Route path="/galeri-kegiatan" element={<GaleriKegiatanPage />} />
+                        <Route path="/pengumuman" element={<PengumumanPage />} />
+                        <Route path="/kontak" element={<KontakPage />} />
+                    </Route>
+>>>>>>> Stashed changes
 
           {/* ── RUTE PUBLIK ───────────────────────────────────────────── */}
           <Route element={<PublicLayout />}>

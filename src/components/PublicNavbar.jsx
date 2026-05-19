@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
+<<<<<<< Updated upstream
 const PublicNavbar = () => {
   const navigate   = useNavigate();
   const location   = useLocation();
@@ -19,6 +20,18 @@ const PublicNavbar = () => {
     { to: '/galeri',    label: 'Galeri Kegiatan'},
     { to: '/pengumuman',label: 'Pengumuman'     },
     { to: '/kontak',    label: 'Kontak'         },
+=======
+export default function PublicNavbar() {
+  const navItems = [
+    { label: "Beranda", path: "/" },
+    { label: "Profil Gereja", path: "/profil-gereja" },
+    { label: "Jadwal Ibadah", path: "/jadwal-ibadah" },
+    { label: "Pelayanan", path: "/pelayanan" },
+    { label: "Pendeta", path: "/pendeta-senior" },
+    { label: "Galeri Kegiatan", path: "/galeri-kegiatan" },
+    { label: "Pengumuman", path: "/pengumuman" },
+    { label: "Kontak", path: "/kontak" },
+>>>>>>> Stashed changes
   ];
 
   return (
@@ -109,6 +122,10 @@ const PublicNavbar = () => {
       )}
     </nav>
   );
+<<<<<<< Updated upstream
 };
 
 export default PublicNavbar;
+=======
+}
+>>>>>>> Stashed changes
