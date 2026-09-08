@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.png";
-import { UserCircle } from "lucide-react"; // Ikon Bell telah dihapus
+import { ArrowUpRight, LogOut, Menu, UserCircle, X } from "lucide-react";
 import { useAuth } from "../context/useAuth";
 
 export default function JemaatNavbar() {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // 1. Definisikan menu dasar
   const baseNavItems = [
@@ -34,31 +36,33 @@ export default function JemaatNavbar() {
   };
 
   return (
-    <header className="w-full bg-[#0D1282] text-white shadow-md sticky top-0 z-50">
-      <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-4 md:px-8">
-        {/* LEFT - Logo & Title */}
-        <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0D1282] text-white shadow-lg shadow-[#0D1282]/10">
+      <div className="mx-auto flex h-[82px] max-w-7xl items-center justify-between gap-5 px-5 sm:px-8 lg:px-10">
+        <Link to="/ibadah-rayon" className="flex items-center gap-3">
           <img
             src={logo}
             alt="Logo GPdI"
-            className="h-10 w-10 object-contain rounded-full bg-white p-0.5"
+            className="h-10 w-10 rounded-full bg-white p-1 object-contain shadow-md sm:h-11 sm:w-11"
           />
-          <span className="text-[14px] font-bold tracking-wide whitespace-nowrap hidden sm:block">
-            GPdI SIBULELE
+          <span className="hidden text-sm font-extrabold leading-tight tracking-tight sm:block">
+            GPdI
+            <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-blue-200">
+              Ruang Jemaat
+            </span>
           </span>
-        </div>
+        </Link>
 
-        {/* CENTER - Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/10 p-1 lg:flex">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
-                `text-[13px] font-medium tracking-wide transition-all duration-300 ${
+                `rounded-full px-3 py-2 text-[12px] font-medium tracking-wide transition-colors duration-300 xl:px-3.5 ${
                   isActive
-                    ? "text-white border-b-2 border-white pb-1"
-                    : "text-white/70 hover:text-white"
+                    ? "bg-white font-bold text-[#0D1282] shadow-sm"
+                    : "text-white/70 hover:bg-white/10 hover:text-white"
                 }`
               }
             >
@@ -67,18 +71,15 @@ export default function JemaatNavbar() {
           ))}
         </nav>
 
-        {/* RIGHT - Profil & Actions */}
-        <div className="flex items-center gap-4 md:gap-6">
-          {/* Fitur Notifikasi telah dihilangkan dari sini */}
-
+        <div className="hidden items-center gap-3 lg:flex">
           {isAuthenticated ? (
             <Link
               to="/profil"
-              className="hidden md:flex items-center gap-2 transition-colors hover:text-gray-300 cursor-pointer"
+              className="flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-2 transition-colors hover:bg-white/15"
               title="Ke Halaman Profil"
             >
               <UserCircle size={20} strokeWidth={2} className="text-white/80" />
-              <span className="text-[13px] font-semibold whitespace-nowrap">
+              <span className="max-w-[130px] truncate text-[12px] font-semibold">
                 {user?.nama_lengkap ||
                   user?.name ||
                   user?.email ||
@@ -94,9 +95,9 @@ export default function JemaatNavbar() {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="rounded-full bg-[#D71313] px-5 py-[6px] text-[12px] font-bold text-white shadow-sm transition-colors hover:bg-red-800"
+              className="group flex items-center gap-2 rounded-full bg-[#D71313] px-4 py-2 text-xs font-bold text-white shadow-sm transition-colors hover:bg-red-800"
             >
-              LOGOUT
+              Keluar <LogOut size={14} />
             </button>
           ) : (
             <Link
@@ -107,7 +108,63 @@ export default function JemaatNavbar() {
             </Link>
           )}
         </div>
+
+        <button
+          type="button"
+          aria-label={isMenuOpen ? "Tutup menu" : "Buka menu"}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="rounded-lg p-2 transition hover:bg-white/10 lg:hidden"
+        >
+          {isMenuOpen ? <X size={23} /> : <Menu size={23} />}
+        </button>
       </div>
+      {isMenuOpen && (
+        <div className="border-t border-white/10 bg-[#0a0e68] px-5 pb-5 pt-3 lg:hidden">
+          <div className="mb-3 flex items-center gap-3 rounded-xl bg-white/10 p-3">
+            <UserCircle size={22} className="text-blue-200" />
+            <div className="min-w-0">
+              <p className="truncate text-sm font-bold">
+                {user?.nama_lengkap ||
+                  user?.name ||
+                  user?.email ||
+                  "Jemaat GPdI"}
+              </p>
+              <p className="text-xs capitalize text-blue-200">
+                {user?.role?.replace("_", " ") || "jemaat"}
+              </p>
+            </div>
+          </div>
+          <nav className="flex flex-col gap-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) =>
+                  `rounded-lg px-4 py-3 text-sm ${isActive ? "bg-white/15 font-bold text-white" : "text-blue-100 hover:bg-white/10"}`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="mt-3 flex gap-2">
+            <Link
+              to="/profil"
+              onClick={() => setIsMenuOpen(false)}
+              className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-bold text-[#0D1282]"
+            >
+              Profil <ArrowUpRight size={15} />
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="flex items-center justify-center gap-2 rounded-lg bg-[#D71313] px-4 py-3 text-sm font-bold"
+            >
+              Keluar <LogOut size={15} />
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

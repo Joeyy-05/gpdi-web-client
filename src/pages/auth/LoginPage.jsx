@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginAPI } from "../../services/authService";
 import { useAuth } from "../../context/useAuth";
+import logo from "../../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.png";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -58,52 +59,66 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex font-sans bg-white">
-      {/* SISI KIRI: Banner Gambar (Sembunyi di layar kecil) */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-slate-900 items-end pb-16 px-16">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-50"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop')",
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent"></div>
-
-        <div className="relative z-10 text-white">
-          <h2 className="text-4xl font-bold mb-4 leading-tight">
-            Sistem Informasi Manajemen
-            <br />
-            GPdI Jemaat Sibulele
-          </h2>
-          <p className="text-lg text-slate-300 font-medium">
-            Melayani dengan kasih, bertumbuh dalam iman.
-          </p>
+    <div className="flex min-h-screen bg-[#f7f8fb] font-sans">
+      <div className="relative hidden overflow-hidden bg-[#07104f] px-12 pb-14 pt-14 text-white lg:flex lg:w-[42%] lg:flex-col lg:justify-between xl:px-16">
+        <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full border-[48px] border-white/10" />
+        <div className="absolute -bottom-32 -left-20 h-96 w-96 rounded-full border-[64px] border-[#D71313]/25" />
+        <div className="relative z-10">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white p-1 shadow-lg">
+              <img
+                src={logo}
+                alt="Logo GPdI"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <span className="text-sm font-bold tracking-[0.18em]">
+              GPdI SIBULELE
+            </span>
+          </div>
+          <div className="mt-28 max-w-md">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-blue-200">
+              Portal jemaat
+            </p>
+            <h2 className="mt-5 text-5xl font-extrabold leading-[1.08]">
+              Bertumbuh dalam iman, melayani dengan kasih.
+            </h2>
+            <p className="mt-7 max-w-sm text-base leading-7 text-blue-100">
+              Satu ruang untuk mengikuti informasi gereja, renungan, jadwal
+              rayon, dan pelayanan jemaat GPdI Sibulele.
+            </p>
+          </div>
+        </div>
+        <div className="relative z-10 flex items-center gap-3 text-sm text-blue-200">
+          <span className="h-px w-10 bg-red-300" />
+          Melayani bersama dalam kasih
         </div>
       </div>
 
       {/* SISI KANAN: Formulir Login */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12">
-        <div className="w-full max-w-md">
+      <div className="flex w-full items-center justify-center px-5 py-10 sm:px-10 lg:w-[58%] lg:px-16 xl:px-24">
+        <div className="w-full max-w-[460px]">
           {/* Header Formulir */}
-          <div className="mb-10 text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start mb-6">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg mr-3 shadow-md">
+          <div className="mb-9 text-center sm:text-left">
+            <div className="mb-8 flex items-center justify-center gap-3 sm:justify-start">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0D1282] text-lg font-bold text-white shadow-md">
                 G
               </div>
-              <span className="font-bold text-2xl text-slate-800 tracking-tight">
+              <span className="text-xl font-extrabold tracking-tight text-slate-900">
                 GPdI Sibulele
               </span>
             </div>
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
               Selamat Datang Kembali
             </h1>
-            <p className="text-slate-500">Silakan masuk ke akun Anda.</p>
+            <p className="mt-3 text-sm leading-6 text-slate-500">
+              Masuk untuk mengakses layanan dan informasi jemaat.
+            </p>
           </div>
 
           {/* Notifikasi Error */}
           {errorMsg && (
-            <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-md flex items-start">
+            <div className="mb-6 flex items-start rounded-xl border border-red-200 bg-red-50 p-4">
               <svg
                 className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0"
                 fill="currentColor"
@@ -146,7 +161,7 @@ const LoginPage = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition text-sm"
+                  className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-11 pr-4 text-sm transition focus:border-[#0D1282] focus:ring-4 focus:ring-blue-100"
                   placeholder="Masukkan email Anda"
                   required
                 />
@@ -178,7 +193,7 @@ const LoginPage = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-12 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition text-sm"
+                  className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-11 pr-12 text-sm transition focus:border-[#0D1282] focus:ring-4 focus:ring-blue-100"
                   placeholder="Masukkan kata sandi"
                   required
                 />
@@ -232,7 +247,7 @@ const LoginPage = () => {
                 <input
                   id="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
+                  className="h-4 w-4 rounded border-slate-300 text-[#0D1282] focus:ring-[#0D1282]"
                 />
                 <label
                   htmlFor="remember-me"
@@ -242,12 +257,9 @@ const LoginPage = () => {
                 </label>
               </div>
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-blue-600 hover:text-blue-500 transition"
-                >
-                  Lupa kata sandi?
-                </a>
+                <span className="font-medium text-slate-400">
+                  Hubungi admin untuk reset password
+                </span>
               </div>
             </div>
 
@@ -255,7 +267,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md transition flex justify-center items-center ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
+              className={`flex w-full items-center justify-center rounded-xl bg-[#0D1282] px-4 py-3.5 font-bold text-white shadow-lg shadow-blue-950/15 transition hover:bg-[#0a0e68] ${isLoading ? "cursor-not-allowed opacity-70" : ""}`}
             >
               {isLoading ? (
                 <>
@@ -291,7 +303,7 @@ const LoginPage = () => {
           <div className="mt-8 text-center text-sm text-slate-500">
             <Link
               to="/"
-              className="hover:text-blue-600 transition font-medium inline-flex items-center"
+              className="inline-flex items-center font-medium transition hover:text-[#0D1282]"
             >
               <svg
                 className="w-4 h-4 mr-1"

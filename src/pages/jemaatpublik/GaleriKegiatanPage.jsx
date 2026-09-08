@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { ChevronLeft, ChevronRight, Image, Search, X } from "lucide-react";
 import { getPublicGaleri } from "../../services/contentService";
 import { galeriData } from "../../data/galeriData";
 import { contentStorageUrl } from "../../config/mediaUrls";
@@ -91,31 +92,34 @@ export default function GaleriKegiatanPage() {
 
   return (
     <div
-      className="min-h-screen bg-white text-black"
+      className="min-h-screen bg-[#f7f8fb] text-slate-900"
       style={{ fontFamily: "Montserrat, sans-serif" }}
     >
       <main className="pb-10">
         <div className="mx-auto w-full max-w-[1440px]">
           {/* Heading */}
-          <section className="pt-[34px] text-center px-4">
-            <h1 className="text-[44px] font-extrabold tracking-[0.06em] text-[#0D1282]">
+          <section className="px-5 pb-4 pt-16 text-center sm:px-8 lg:px-12">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D71313]">
+              Momen yang dibagikan
+            </p>
+            <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-[#0D1282] sm:text-6xl">
               Galeri Kegiatan
             </h1>
-            <p className="mt-[20px] text-[18px] font-medium text-gray-600">
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
               Dokumentasi Ibadah dan Aktivitas Jemaat
             </p>
           </section>
 
           {/* Hero Banner (Data Statis dari galeriData) */}
-          <section className="mt-[48px] px-[30px]">
-            <div className="relative mx-auto flex h-[380px] w-full max-w-[1365px] items-center justify-center overflow-hidden rounded-2xl bg-[#0D1282] shadow-lg">
+          <section className="mt-12 px-5 sm:px-8 lg:px-12">
+            <div className="relative mx-auto flex h-[330px] w-full items-center justify-center overflow-hidden rounded-2xl bg-[#0D1282] shadow-xl sm:h-[410px]">
               <img
                 src={hero.gambarBanner}
                 alt="Banner Galeri"
                 className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-overlay"
               />
               <div className="relative z-10 px-6 text-center text-white">
-                <p className="max-w-[900px] text-[26px] font-medium italic leading-relaxed drop-shadow-md">
+                <p className="max-w-3xl px-5 text-xl font-medium italic leading-relaxed drop-shadow-md sm:text-3xl">
                   "{hero.ayat}"
                 </p>
                 <p className="mt-6 text-[20px] font-bold drop-shadow-md">
@@ -126,15 +130,11 @@ export default function GaleriKegiatanPage() {
           </section>
 
           {/* Divider */}
-          <section className="mt-[42px] px-[30px] max-w-[1365px] mx-auto">
-            <div className="h-[1px] w-full bg-gray-300" />
-          </section>
-
           {/* Filter & Search */}
-          <section className="mt-[60px] px-4">
+          <section className="mt-16 px-5 sm:px-8 lg:px-12">
             <form
               onSubmit={handleSearch}
-              className="mx-auto flex w-full max-w-[700px] flex-col md:flex-row items-center justify-center gap-[18px]"
+              className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/5 md:flex-row"
             >
               <div className="relative w-full md:w-auto">
                 <select
@@ -163,20 +163,20 @@ export default function GaleriKegiatanPage() {
                 placeholder="Cari nama kegiatan..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="h-[60px] flex-1 w-full rounded-xl border border-gray-300 bg-white px-5 text-[16px] font-medium text-gray-700 outline-none placeholder:text-gray-400 focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282] shadow-sm transition-all"
+                className="h-12 w-full flex-1 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-gray-700 outline-none placeholder:text-gray-400 focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282] transition-all"
               />
 
               <button
                 type="submit"
-                className="h-[60px] w-full md:w-[120px] rounded-xl bg-[#0D1282] text-[16px] font-bold text-white shadow-md transition-all hover:bg-[#0a0e66]"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#0D1282] text-sm font-bold text-white shadow-md transition-all hover:bg-[#0a0e66] md:w-28"
               >
-                Cari
+                <Search size={16} /> Cari
               </button>
             </form>
           </section>
 
           {/* Gallery Grid */}
-          <section className="mt-[70px] px-[30px]">
+          <section className="mt-14 px-5 sm:px-8 lg:px-12">
             <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
               {loading ? (
                 <div className="col-span-full py-20 text-center text-lg font-semibold text-gray-500 animate-pulse">
@@ -184,10 +184,10 @@ export default function GaleriKegiatanPage() {
                 </div>
               ) : paginatedItems.length > 0 ? (
                 paginatedItems.map((item) => (
-                  <div
+                  <button
                     key={item.id}
                     onClick={() => setSelectedItem(item)}
-                    className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-pointer"
+                    className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                   >
                     <div className="aspect-[4/3] w-full overflow-hidden bg-gray-200 relative">
                       <img
@@ -200,7 +200,7 @@ export default function GaleriKegiatanPage() {
                         {item.kategori}
                       </div>
                     </div>
-                    <div className="flex flex-col items-center p-6 text-center flex-1 justify-center">
+                    <div className="flex flex-1 flex-col justify-center p-6">
                       <h3 className="text-[20px] font-bold text-[#0D1282] line-clamp-2">
                         {item.judul}
                       </h3>
@@ -208,7 +208,7 @@ export default function GaleriKegiatanPage() {
                         {item.tanggal}
                       </p>
                     </div>
-                  </div>
+                  </button>
                 ))
               ) : (
                 <div className="col-span-full py-16 text-center text-[18px] font-medium text-gray-500 border-2 border-dashed border-gray-200 rounded-2xl">
@@ -229,19 +229,7 @@ export default function GaleriKegiatanPage() {
                   disabled={currentPage === 1}
                   className="flex h-12 w-12 items-center justify-center rounded-xl bg-white border border-gray-300 text-[#0D1282] shadow-sm transition hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
+                  <ChevronLeft size={18} />
                 </button>
 
                 {pageNumbers.map((num) => (
@@ -265,19 +253,7 @@ export default function GaleriKegiatanPage() {
                   disabled={currentPage === totalPages}
                   className="flex h-12 w-12 items-center justify-center rounded-xl bg-white border border-gray-300 text-[#0D1282] shadow-sm transition hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
+                  <ChevronRight size={18} />
                 </button>
               </div>
             </section>
@@ -291,7 +267,7 @@ export default function GaleriKegiatanPage() {
                   onClick={() => setSelectedItem(null)}
                   className="absolute right-6 top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition hover:bg-[#D71313]"
                 >
-                  ✕
+                  <X size={18} />
                 </button>
 
                 <div className="aspect-video w-full overflow-hidden bg-gray-100">

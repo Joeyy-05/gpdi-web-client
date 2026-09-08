@@ -11,7 +11,7 @@ const RequestSuratPage = () => {
   });
 
   // Pastikan nomor ini diawali dengan kode negara tanpa tanda '+' (misal: 62 untuk Indonesia)
-  const nomorAdmin = "6281263299741"; 
+  const nomorAdmin = "6281263299741";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +47,7 @@ Catatan Tambahan: ${form.catatan || "-"}`;
 
     // encodeURIComponent akan otomatis mengubah \n menjadi %0A dan mengamankan karakter khusus
     const waUrl = `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(rawPesan)}`;
-    
+
     // Membuka WhatsApp di tab baru
     window.open(waUrl, "_blank");
   };
@@ -56,10 +56,10 @@ Catatan Tambahan: ${form.catatan || "-"}`;
     <>
       <style>{`
         .request-page-content {
-          padding: 34px 28px 56px;
+          padding: 48px 20px 80px;
           font-family: "Montserrat", sans-serif;
           color: #111111;
-          background: #FFFFFF;
+          background: #f7f8fb;
         }
 
         .request-inner {
@@ -69,26 +69,28 @@ Catatan Tambahan: ${form.catatan || "-"}`;
         }
 
         .page-title {
-          font-size: 40px;
+          font-size: 48px;
           line-height: 1.15;
           font-weight: 800;
           margin: 0 0 22px 0;
-          letter-spacing: 0.3px;
+          letter-spacing: -0.02em;
           color: #0D1282;
         }
 
         .page-subtext {
-          font-size: 17px;
+          font-size: 16px;
           line-height: 1.65;
           font-weight: 500;
           margin: 0;
         }
 
         .form-box {
-          background: #EEEDED;
-          padding: 30px 34px;
-          margin-top: 30px;
-          border-radius: 12px;
+          background: #FFFFFF;
+          padding: 30px 24px;
+          margin-top: 36px;
+          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgb(15 23 42 / 0.05);
         }
 
         .form-title {
@@ -125,13 +127,13 @@ Catatan Tambahan: ${form.catatan || "-"}`;
         .form-select,
         .form-textarea {
           width: 100%;
-          border: 1px solid #C9C9C9;
+          border: 1px solid #e2e8f0;
           background: #FFFFFF;
           font-family: inherit;
           font-size: 15px;
-          padding: 13px 14px;
+          padding: 13px 15px;
           outline: none;
-          border-radius: 6px;
+          border-radius: 12px;
           transition: border-color 0.2s;
         }
 
@@ -139,6 +141,7 @@ Catatan Tambahan: ${form.catatan || "-"}`;
         .form-select:focus,
         .form-textarea:focus {
           border-color: #0D1282;
+          box-shadow: 0 0 0 3px rgb(13 18 130 / 0.08);
         }
 
         .form-textarea {
@@ -170,7 +173,7 @@ Catatan Tambahan: ${form.catatan || "-"}`;
           font-size: 16px;
           font-weight: 700;
           cursor: pointer;
-          border-radius: 6px;
+          border-radius: 999px;
           transition: background 0.2s;
         }
 
@@ -198,7 +201,7 @@ Catatan Tambahan: ${form.catatan || "-"}`;
 
         @media (max-width: 640px) {
           .request-page-content {
-            padding: 24px 16px 40px;
+            padding: 32px 16px 56px;
           }
 
           .page-title {
@@ -226,8 +229,13 @@ Catatan Tambahan: ${form.catatan || "-"}`;
       <div className="request-page-content min-h-screen">
         <div className="request-inner">
           <h1 className="page-title">Request Surat</h1>
-          <p className="page-subtext">Silakan isi formulir di bawah untuk mengajukan permohonan surat.</p>
-          <p className="page-subtext font-medium text-gray-600">Setelah dikirim, Anda akan diarahkan otomatis ke WhatsApp Admin Gereja.</p>
+          <p className="page-subtext">
+            Silakan isi formulir di bawah untuk mengajukan permohonan surat.
+          </p>
+          <p className="page-subtext font-medium text-gray-600">
+            Setelah dikirim, Anda akan diarahkan otomatis ke WhatsApp Admin
+            Gereja.
+          </p>
 
           <form className="form-box shadow-sm" onSubmit={handleSubmit}>
             <h2 className="form-title">Form Permohonan Surat</h2>
@@ -268,16 +276,24 @@ Catatan Tambahan: ${form.catatan || "-"}`;
                   onChange={handleChange}
                   required
                 >
-                  <option value="" disabled>Pilih jenis surat</option>
+                  <option value="" disabled>
+                    Pilih jenis surat
+                  </option>
                   <option value="Surat Baptis">Surat Baptis</option>
                   <option value="Surat Nikah">Surat Peneguhan Nikah</option>
-                  <option value="Surat Keterangan Jemaat">Surat Keterangan Jemaat</option>
-                  <option value="Surat Pengantar">Surat Pengantar Pindah</option>
+                  <option value="Surat Keterangan Jemaat">
+                    Surat Keterangan Jemaat
+                  </option>
+                  <option value="Surat Pengantar">
+                    Surat Pengantar Pindah
+                  </option>
                 </select>
               </div>
 
               <div className="form-group">
-                <label className="form-label">Rencana Tanggal Pengambilan</label>
+                <label className="form-label">
+                  Rencana Tanggal Pengambilan
+                </label>
                 <input
                   type="date"
                   name="tanggalPengambilan"
@@ -302,7 +318,9 @@ Catatan Tambahan: ${form.catatan || "-"}`;
               </div>
 
               <div className="form-group full">
-                <label className="form-label">Catatan Tambahan (Opsional)</label>
+                <label className="form-label">
+                  Catatan Tambahan (Opsional)
+                </label>
                 <textarea
                   name="catatan"
                   className="form-textarea"
@@ -314,13 +332,23 @@ Catatan Tambahan: ${form.catatan || "-"}`;
             </div>
 
             <p className="helper-text">
-              * Pastikan data yang diisi sudah benar. WhatsApp akan terbuka otomatis dengan format pesan yang sudah tersusun.
+              * Pastikan data yang diisi sudah benar. WhatsApp akan terbuka
+              otomatis dengan format pesan yang sudah tersusun.
             </p>
 
             <div className="button-wrap">
-              <button type="submit" className="submit-btn flex justify-center items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+              <button
+                type="submit"
+                className="submit-btn flex justify-center items-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
                 </svg>
                 Kirim via WhatsApp
               </button>

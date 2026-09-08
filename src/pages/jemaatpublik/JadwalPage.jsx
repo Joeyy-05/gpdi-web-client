@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { CalendarDays, ChevronDown, Search, X } from "lucide-react";
 import {
   getPublicWorship,
   getPublicActivity,
@@ -14,6 +15,9 @@ const KATEGORI_OPTIONS = [
   "Ibadah Wanita (Pelwap)",
   "Doa Malam Jemaat",
 ];
+
+const scheduleHeroImage =
+  "https://images.unsplash.com/photo-1544427920-c49ccfb85579?q=85&w=1800&auto=format&fit=crop";
 
 const JadwalPage = () => {
   const [kategori, setKategori] = useState("Semua Kegiatan");
@@ -67,62 +71,80 @@ const JadwalPage = () => {
 
   return (
     <div
-      className="bg-white min-h-screen"
+      className="min-h-screen bg-[#f7f8fb]"
       style={{ fontFamily: "Montserrat, sans-serif" }}
     >
       {/* ══ JUDUL HALAMAN ══════════════════════════════════════════════════ */}
-      <div className="bg-white pt-14 pb-4 text-center px-4">
-        <h1 className="text-[44px] font-extrabold tracking-[0.06em] text-[#0D1282]">
+      <div className="px-5 pb-4 pt-16 text-center sm:px-8 lg:px-12">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D71313]">
+          Rencanakan kehadiran
+        </p>
+        <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-[#0D1282] sm:text-6xl">
           Jadwal Ibadah &amp; Kegiatan
         </h1>
-        <p className="mt-4 text-[18px] text-gray-600">
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
           Informasi Jadwal Ibadah Rutin dan Kegiatan Gereja
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-        <div className="w-full h-52 md:h-72 bg-gray-200 overflow-hidden rounded-xl border border-gray-300">
-          <img
-            src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1440&auto=format&fit=crop"
-            alt="Gedung Gereja"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <hr className="border-slate-300" />
+      <div className="mx-auto mt-12 max-w-7xl px-5 sm:px-8 lg:px-12">
+        <section className="grid overflow-hidden rounded-2xl bg-[#0D1282] shadow-xl shadow-blue-950/15 lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="flex flex-col justify-between p-7 text-white sm:p-10">
+            <div>
+              <CalendarDays size={28} className="text-blue-200" />
+              <p className="mt-10 text-xs font-bold uppercase tracking-[0.2em] text-blue-200">
+                Rencanakan waktu bersekutu
+              </p>
+              <h2 className="mt-3 max-w-md text-3xl font-extrabold leading-tight sm:text-4xl">
+                Hadir, bersekutu, dan bertumbuh bersama.
+              </h2>
+              <p className="mt-5 max-w-md text-sm leading-6 text-blue-100 sm:text-base">
+                Lihat jadwal ibadah rutin dan kegiatan khusus GPdI Sibulele
+                dalam satu tempat.
+              </p>
+            </div>
+            <p className="mt-10 text-sm font-semibold text-red-200">
+              Jadwal diperbarui oleh pengurus gereja.
+            </p>
+          </div>
+          <div className="relative min-h-[250px] overflow-hidden sm:min-h-[330px]">
+            <img
+              src={scheduleHeroImage}
+              alt="Ruang ibadah GPdI Sibulele"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0D1282]/45 via-transparent to-transparent" />
+          </div>
+        </section>
       </div>
 
       {/* ══ JADWAL IBADAH RUTIN (Tabel) ════════════════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-[#0D1282] mb-8">
-          Jadwal Ibadah Rutin
-        </h2>
-
+      <section className="mx-auto max-w-7xl px-5 pb-4 pt-20 sm:px-8 lg:px-12">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D71313]">
+              Setiap minggu
+            </p>
+            <h2 className="mt-2 text-3xl font-extrabold text-[#0D1282]">
+              Jadwal ibadah rutin
+            </h2>
+          </div>
+          <CalendarDays className="hidden text-[#0D1282] sm:block" size={28} />
+        </div>
         <div className="flex flex-wrap gap-2 items-center mb-4 relative z-30">
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-2 pl-3 pr-2 py-2 border border-slate-400 bg-white text-sm text-slate-700 min-w-[210px] justify-between focus:outline-none"
+              className="flex min-w-[210px] items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:outline-none"
             >
               <span className="font-semibold">{kategori}</span>
-              <svg
-                className={`w-4 h-4 text-slate-500 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+              <ChevronDown
+                size={16}
+                className={`text-slate-500 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+              />
             </button>
             {dropdownOpen && (
-              <div className="absolute top-full left-0 mt-1 w-full bg-white border border-slate-300 shadow-lg rounded-md overflow-hidden z-20">
+              <div className="absolute left-0 top-full z-20 mt-1 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
                 {KATEGORI_OPTIONS.map((k) => (
                   <button
                     key={k}
@@ -130,7 +152,7 @@ const JadwalPage = () => {
                       setKategori(k);
                       setDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-100 transition ${kategori === k ? "bg-slate-100 font-bold text-[#0D1282]" : "text-slate-700"}`}
+                    className={`w-full px-4 py-3 text-left text-sm transition hover:bg-slate-50 ${kategori === k ? "bg-blue-50 font-bold text-[#0D1282]" : "text-slate-700"}`}
                   >
                     {k}
                   </button>
@@ -139,18 +161,24 @@ const JadwalPage = () => {
             )}
           </div>
 
-          <input
-            type="text"
-            value={cari}
-            onChange={(e) => setCari(e.target.value)}
-            placeholder="Cari Hari/Tempat..."
-            className="flex-1 min-w-[180px] px-3 py-2 border border-slate-400 text-sm text-slate-700 focus:outline-none focus:border-[#0D1282]"
-          />
+          <div className="relative min-w-[220px] flex-1">
+            <Search
+              size={17}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+            />
+            <input
+              type="text"
+              value={cari}
+              onChange={(e) => setCari(e.target.value)}
+              placeholder="Cari Hari/Tempat..."
+              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 pl-11 text-sm text-slate-700 shadow-sm focus:outline-none focus:border-[#0D1282]"
+            />
+          </div>
         </div>
 
-        <div className="border border-slate-300 overflow-x-auto rounded-lg shadow-sm">
+        <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5">
           <table className="w-full text-left">
-            <thead className="border-b border-slate-300 bg-[#F9F9F9]">
+            <thead className="border-b border-slate-200 bg-slate-50">
               <tr>
                 {["Hari", "Kategori Ibadah", "Waktu", "Tempat"].map((h) => (
                   <th
@@ -208,8 +236,8 @@ const JadwalPage = () => {
       </section>
 
       {/* ══ KEGIATAN KHUSUS / EVENT GEREJA (Card) ═════════════════════════ */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-[#0D1282] mb-10 uppercase tracking-widest">
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-12">
+        <h2 className="mb-10 text-3xl font-extrabold text-[#0D1282]">
           Kegiatan Khusus / Event
         </h2>
 
@@ -226,7 +254,7 @@ const JadwalPage = () => {
             kegiatanKhusus.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col overflow-hidden border border-slate-200 bg-[#F9F9F9] rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300"
+                className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="h-52 w-full overflow-hidden bg-gray-200 relative">
                   <img
@@ -238,12 +266,12 @@ const JadwalPage = () => {
                     alt={item.judul || item.title || item.nama_kegiatan}
                     className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
                   />
-                  <div className="absolute top-4 left-4 bg-[#D71313] text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                  <div className="absolute left-4 top-4 rounded-full bg-[#D71313] px-3 py-1 text-xs font-bold text-white shadow-md">
                     EVENT KHUSUS
                   </div>
                 </div>
                 <div className="p-8 flex flex-col flex-1">
-                  <h3 className="text-2xl font-bold text-[#0D1282] mb-4 line-clamp-2">
+                  <h3 className="mb-4 line-clamp-2 text-2xl font-bold text-[#0D1282]">
                     {item.judul || item.title || item.nama_kegiatan}
                   </h3>
                   <p className="text-base mb-2 text-gray-700">
@@ -266,7 +294,7 @@ const JadwalPage = () => {
                   </p>
                   <button
                     onClick={() => setSelectedEvent(item)}
-                    className="w-fit px-8 py-2.5 rounded-lg bg-[#0D1282] text-white text-sm font-bold hover:bg-[#D71313] transition-colors shadow-sm"
+                    className="w-fit rounded-full bg-[#0D1282] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#D71313]"
                   >
                     Lihat Detail
                   </button>
@@ -283,9 +311,9 @@ const JadwalPage = () => {
           <div className="relative w-full max-w-[750px] max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl">
             <button
               onClick={() => setSelectedEvent(null)}
-              className="absolute right-6 top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition hover:bg-[#D71313]"
+              className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition hover:bg-[#D71313]"
             >
-              ✕
+              <X size={18} />
             </button>
             <div className="h-[300px] w-full overflow-hidden bg-gray-100">
               <img

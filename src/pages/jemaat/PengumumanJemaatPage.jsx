@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
+import { Bell, ChevronLeft, ChevronRight, Search } from "lucide-react";
 // Link dihapus karena kita tidak lagi pindah halaman
 import { getAllPengumuman } from "../../services/contentService";
 
@@ -13,20 +14,17 @@ export default function PengumumanJemaatPage() {
   // State Dinamis
   const [pengumumanData, setPengumumanData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // PERBAIKAN: State untuk melacak ID pengumuman yang sedang dibuka
   const [expandedId, setExpandedId] = useState(null);
 
-  const categories = [
-    "Semua Pengumuman",
-    "Publik",
-    "Internal Jemaat",
-    "Rayon",
-  ];
+  const categories = ["Semua Pengumuman", "Publik", "Internal Jemaat", "Rayon"];
 
   const pengumumanHeroData = {
-    title: "Memperhatikan setiap informasi adalah bentuk partisipasi aktif kita dalam persekutuan.",
-    image: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop"
+    title:
+      "Memperhatikan setiap informasi adalah bentuk partisipasi aktif kita dalam persekutuan.",
+    image:
+      "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop",
   };
 
   useEffect(() => {
@@ -34,10 +32,12 @@ export default function PengumumanJemaatPage() {
       setLoading(true);
       try {
         const res = await getAllPengumuman();
-        
-        const activeData = (res.data || []).filter(item => item.status === "Aktif");
 
-        const formattedData = activeData.map(item => {
+        const activeData = (res.data || []).filter(
+          (item) => item.status === "Aktif",
+        );
+
+        const formattedData = activeData.map((item) => {
           let catLabel = "Umum";
           if (item.scope === "publik") catLabel = "Publik";
           if (item.scope === "jemaat") catLabel = "Internal Jemaat";
@@ -47,8 +47,12 @@ export default function PengumumanJemaatPage() {
             id: item.id,
             title: item.judul,
             category: catLabel,
-            publishedAt: new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
-            author: "Pengurus Gereja", 
+            publishedAt: new Date(item.created_at).toLocaleDateString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
+            author: "Pengurus Gereja",
             summary: item.isi,
           };
         });
@@ -81,7 +85,10 @@ export default function PengumumanJemaatPage() {
     });
   }, [category, keyword, pengumumanData]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredData.length / ITEMS_PER_PAGE));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredData.length / ITEMS_PER_PAGE),
+  );
 
   const paginatedData = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -121,20 +128,23 @@ export default function PengumumanJemaatPage() {
 
   return (
     <section
-      className="min-h-screen bg-white"
+      className="min-h-screen bg-[#f7f8fb]"
       style={{ fontFamily: "Montserrat, sans-serif" }}
     >
-      <div className="mx-auto w-full max-w-[1200px] px-4 py-8 md:px-6">
-        <div className="text-center">
-          <h1 className="text-[30px] font-extrabold md:text-[46px] text-[#0D1282]">
+      <div className="mx-auto w-full max-w-7xl px-5 py-12 sm:px-8 lg:px-12">
+        <div className="text-center sm:text-left">
+          <p className="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#D71313] sm:justify-start">
+            <Bell size={15} /> Informasi jemaat
+          </p>
+          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-[#0D1282] sm:text-6xl">
             Pengumuman Gereja
           </h1>
-          <p className="mt-2 text-[16px] md:text-[20px] text-gray-700 font-medium">
+          <p className="mt-4 max-w-2xl text-base font-medium leading-7 text-slate-600 sm:text-lg">
             Informasi Resmi untuk Jemaat
           </p>
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-2xl bg-[#EEEDED] shadow-sm">
+        <div className="mt-12 overflow-hidden rounded-2xl bg-[#EEEDED] shadow-xl">
           <div className="relative flex min-h-[220px] items-center justify-center md:min-h-[260px] bg-[#0D1282]">
             <img
               src={pengumumanHeroData.image}
@@ -150,12 +160,12 @@ export default function PengumumanJemaatPage() {
 
         <form
           onSubmit={handleSearch}
-          className="mt-6 flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm md:flex-row md:items-center"
+          className="mt-8 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-lg shadow-slate-900/5 md:flex-row md:items-center"
         >
           <select
             value={category}
             onChange={handleCategoryChange}
-            className="h-[46px] w-full rounded-lg border border-gray-300 px-3 text-[14px] outline-none focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282] md:w-[220px] cursor-pointer bg-white"
+            className="h-12 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282] md:w-[220px] cursor-pointer bg-white"
           >
             {categories.map((c) => (
               <option key={c} value={c}>
@@ -169,30 +179,30 @@ export default function PengumumanJemaatPage() {
             placeholder="Cari kata kunci pengumuman..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="h-[46px] w-full flex-1 rounded-lg border border-gray-300 px-4 text-[14px] outline-none focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282]"
+            className="h-12 w-full flex-1 rounded-xl border border-slate-200 px-4 text-sm outline-none focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282]"
           />
 
           <button
             type="submit"
-            className="h-[46px] rounded-lg bg-[#0D1282] px-6 text-[14px] font-bold tracking-wide text-white transition hover:bg-[#0a0e66] shadow-sm md:w-auto"
+            className="flex h-12 items-center justify-center gap-2 rounded-xl bg-[#0D1282] px-6 text-sm font-bold tracking-wide text-white transition hover:bg-[#0a0e66] shadow-sm md:w-auto"
           >
-            CARI
+            <Search size={16} /> Cari
           </button>
         </form>
 
         <div className="mt-8 space-y-5">
           {loading ? (
-             <div className="rounded-2xl border border-gray-200 py-16 text-center text-lg font-semibold text-gray-500 animate-pulse bg-gray-50">
-               Menarik data pengumuman...
-             </div>
+            <div className="rounded-2xl border border-gray-200 py-16 text-center text-lg font-semibold text-gray-500 animate-pulse bg-gray-50">
+              Menarik data pengumuman...
+            </div>
           ) : paginatedData.length > 0 ? (
             paginatedData.map((item) => {
               const isExpanded = expandedId === item.id;
-              
+
               return (
                 <article
                   key={item.id}
-                  className="rounded-2xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm transition-all hover:shadow-md hover:border-blue-100"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl md:p-8"
                 >
                   <h2 className="text-[22px] font-bold leading-snug text-[#0D1282]">
                     {item.title}
@@ -204,7 +214,7 @@ export default function PengumumanJemaatPage() {
                         {item.category}
                       </span>
                       <span className="text-[13px] font-medium text-gray-500 flex items-center gap-1">
-                        📅 {item.publishedAt}
+                        {item.publishedAt}
                       </span>
                     </div>
 
@@ -214,8 +224,8 @@ export default function PengumumanJemaatPage() {
                   </div>
 
                   {/* PERBAIKAN: Logika line-clamp dinamis berdasarkan state isExpanded */}
-                  <p 
-                    className={`mt-5 text-[16px] leading-relaxed text-gray-700 whitespace-pre-wrap transition-all duration-300 ${isExpanded ? '' : 'line-clamp-3'}`}
+                  <p
+                    className={`mt-5 text-[16px] leading-relaxed text-gray-700 whitespace-pre-wrap transition-all duration-300 ${isExpanded ? "" : "line-clamp-3"}`}
                   >
                     {item.summary}
                   </p>

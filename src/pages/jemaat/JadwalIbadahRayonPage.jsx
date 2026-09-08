@@ -114,20 +114,20 @@ const JadwalIbadahRayonPage = () => {
   return (
     <>
       <style>{`
-        .rayon-page-content { padding: 34px 28px 56px; font-family: "Montserrat", sans-serif; color: #111111; background: #FFFFFF; }
+        .rayon-page-content { padding: 48px 20px 80px; font-family: "Montserrat", sans-serif; color: #0f172a; background: #f7f8fb; }
         .rayon-inner { width: 100%; max-width: 1240px; margin: 0 auto; }
-        .page-title { font-size: 40px; line-height: 1.15; font-weight: 800; margin: 0 0 22px 0; letter-spacing: 0.3px; color: #0D1282; }
+        .page-title { font-size: 48px; line-height: 1.08; font-weight: 800; margin: 0 0 16px 0; letter-spacing: -0.02em; color: #0D1282; }
         .page-subtext { font-size: 17px; line-height: 1.65; font-weight: 500; margin: 0; }
-        .section-box { background: #EEEDED; padding: 28px 34px; margin-top: 28px; border-radius: 12px; }
+        .section-box { background: #FFFFFF; padding: 28px 24px; margin-top: 20px; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 10px 30px rgb(15 23 42 / 0.05); }
         .section-title { font-size: 22px; line-height: 1.3; font-weight: 800; margin: 0 0 16px 0; color: #0D1282; }
         .info-text { font-size: 17px; line-height: 1.7; font-weight: 500; margin: 0; }
         .info-text strong { font-weight: 800; }
         .info-text + .info-text { margin-top: 2px; }
         .muted-note { margin-top: 20px; font-size: 17px; line-height: 1.7; font-style: italic; font-weight: 500; color: #6E6E6E; }
         .active-status { margin-top: 24px; font-size: 17px; line-height: 1.6; font-weight: 800; color: #29C244; background: #e6f8e8; display: inline-block; padding: 4px 12px; border-radius: 6px; }
-        .history-wrap { margin-top: 40px; }
+        .history-wrap { margin-top: 48px; }
         .history-title { font-size: 22px; line-height: 1.3; font-weight: 800; margin: 0 0 16px 0; color: #0D1282; }
-        @media (max-width: 900px) { .page-title { font-size: 34px; } .section-box { padding: 22px 22px; } }
+        @media (max-width: 900px) { .page-title { font-size: 38px; } .section-box { padding: 22px; } }
         @media (max-width: 640px) { .rayon-page-content { padding: 24px 16px 40px; } .page-title { font-size: 28px; } .page-subtext, .info-text, .muted-note, .active-status { font-size: 15px; } .section-title, .history-title { font-size: 20px; } }
       `}</style>
 

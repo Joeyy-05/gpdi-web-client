@@ -163,24 +163,28 @@ export default function ManajemenIbadahPage() {
   };
 
   const inputClass =
-    "w-full h-[64px] border border-[#D1D1D1] bg-white px-6 text-[18px] font-medium text-[#0D1282] placeholder:text-[#7A7A7A] outline-none focus:border-[#0D1282] rounded-lg";
-  const labelClass = "mb-3 block text-[20px] font-semibold text-[#0D1282]";
+    "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-[#0D1282] placeholder:text-slate-400 outline-none focus:border-[#0D1282] focus:ring-2 focus:ring-blue-100";
+  const labelClass =
+    "mb-2 block text-xs font-bold uppercase tracking-wide text-[#0D1282]";
 
   return (
     <div
-      className="min-h-screen bg-white text-[#0D1282]"
+      className="min-h-screen bg-[#f7f8fb] text-[#0D1282]"
       style={{ fontFamily: "Montserrat, sans-serif" }}
     >
-      <main className="px-6 pb-10 pt-10 bg-white">
-        <div className="mx-auto max-w-[1760px]">
-          <section className="rounded-[24px] bg-[#0D1282] p-10 text-white shadow-sm">
-            <h1 className="font-sans text-[48px] font-bold leading-tight">
+      <main className="px-5 pb-16 pt-10 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <section className="rounded-2xl bg-[#0D1282] p-7 text-white shadow-xl shadow-blue-950/15 sm:p-9">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-200">
+              Ketua rayon
+            </p>
+            <h1 className="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl">
               Manajemen Ibadah Rayon
             </h1>
-            <p className="mt-6 text-[20px] font-medium text-[#EEEDED]">
+            <p className="mt-4 text-sm font-medium text-blue-100 sm:text-base">
               Kelola jadwal ibadah rayon secara terpusat dan terorganisir
             </p>
-            <p className="mt-2 text-[20px] font-medium text-[#EEEDED]">
+            <p className="mt-2 text-sm font-medium text-blue-100 sm:text-base">
               Tanggal: {todayDate}
             </p>
 
@@ -190,15 +194,15 @@ export default function ManajemenIbadahPage() {
                   resetForm();
                   window.scrollTo({ top: 300, behavior: "smooth" });
                 }}
-                className="rounded-[12px] bg-[#D71313] px-6 py-3 text-[22px] font-semibold text-white shadow-lg transition hover:bg-[#b10f10]"
+                className="rounded-full bg-[#D71313] px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-[#b10f10]"
               >
                 + Tambah Jadwal Ibadah
               </button>
             </div>
           </section>
 
-          <section className="mt-10 rounded-[24px] bg-[#EEEDED] p-8 shadow-sm">
-            <h2 className="mb-8 text-[24px] font-semibold text-[#0D1282]">
+          <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 className="mb-7 text-2xl font-extrabold text-[#0D1282]">
               {isEditing
                 ? "Form Edit Jadwal Ibadah"
                 : "Form Tambah Jadwal Ibadah"}
@@ -307,8 +311,8 @@ export default function ManajemenIbadahPage() {
             </form>
           </section>
 
-          <section className="mt-10 rounded-[24px] bg-[#EEEDED] p-8 shadow-sm">
-            <h3 className="mb-6 text-[22px] font-bold text-[#0D1282]">
+          <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h3 className="mb-6 text-xl font-extrabold text-[#0D1282]">
               Daftar Jadwal Ibadah Rayon
             </h3>
 
