@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginAPI } from "../../services/authService";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,10 +15,10 @@ const LoginPage = () => {
   // 1. Pastikan Anda juga mengekstrak 'user' dari useAuth
   const { login, isAuthenticated, user } = useAuth();
 
- // 2. Perbarui useEffect agar memeriksa role sebelum melempar (redirect)
+  // 2. Perbarui useEffect agar memeriksa role sebelum melempar (redirect)
   useEffect(() => {
     if (isAuthenticated && user) {
-      if (user.role === 'pendeta' || user.role === 'admin') {
+      if (user.role === "pendeta" || user.role === "admin") {
         navigate("/dashboard");
       } else {
         navigate("/ibadah-rayon");
@@ -36,15 +36,15 @@ const LoginPage = () => {
       if (response.status === "success") {
         // Eksekusi fungsi login di Context untuk menyimpan token JWT
         login(response.data.access_token, response.data.user);
-        
+
         // --- LOGIKA REDIRECT BERDASARKAN ROLE ---
         const userRole = response.data.user.role;
-        
-        if (userRole === 'pendeta' || userRole === 'admin') {
-            navigate("/dashboard"); // Lempar ke Admin
+
+        if (userRole === "pendeta" || userRole === "admin") {
+          navigate("/dashboard"); // Lempar ke Admin
         } else {
-            // PERBAIKAN 3: Lempar ke Jadwal Ibadah Rayon sebagai Landing Page Jemaat
-            navigate("/ibadah-rayon"); 
+          // PERBAIKAN 3: Lempar ke Jadwal Ibadah Rayon sebagai Landing Page Jemaat
+          navigate("/ibadah-rayon");
         }
       }
     } catch (error) {

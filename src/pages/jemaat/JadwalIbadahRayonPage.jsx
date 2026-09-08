@@ -5,15 +5,13 @@ import { getJadwalRayonJemaat } from "../../services/eventService";
 import { getAllUsers } from "../../services/userService";
 
 const JadwalIbadahRayonPage = () => {
-  const [selectedNotif, setSelectedNotif] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
   const [rayonInfo, setRayonInfo] = useState(null);
   const [jadwalAktif, setJadwalAktif] = useState(null);
   const [riwayatJadwal, setRiwayatJadwal] = useState([]);
-  const [notifikasiJadwal, setNotifikasiJadwal] = useState([]);
-  
+
   // State baru khusus untuk menampung nama Ketua Rayon
   const [namaKetua, setNamaKetua] = useState("Mencari data ketua...");
 
@@ -21,7 +19,7 @@ const JadwalIbadahRayonPage = () => {
     const fetchData = async () => {
       setIsLoading(true);
       setErrorMsg("");
-      
+
       try {
         // 1. Ambil data Jadwal dan Rayon dari Event Service
         const response = await getJadwalRayonJemaat();
@@ -30,33 +28,35 @@ const JadwalIbadahRayonPage = () => {
         setRayonInfo(data.rayon || null);
         setJadwalAktif(data.jadwalAktif || null);
         setRiwayatJadwal(data.riwayat || []);
-        setNotifikasiJadwal(data.notifikasi || []);
 
         // 2. SOLUSI 1: Jika user punya rayon, cari nama ketuanya dari User Service
         if (data.rayon && data.rayon.id) {
-            try {
-                const usersResponse = await getAllUsers();
-                const usersList = usersResponse.data || usersResponse;
-                
-                // Cari user yang rolenya 'ketua_rayon' DAN id_rayon-nya cocok
-                const ketua = usersList.find(u => 
-                    u.role === 'ketua_rayon' && u.id_rayon === data.rayon.id
-                );
+          try {
+            const usersResponse = await getAllUsers();
+            const usersList = usersResponse.data || usersResponse;
 
-                if (ketua) {
-                    setNamaKetua(ketua.name);
-                } else {
-                    setNamaKetua("Belum ada Ketua Rayon");
-                }
-            } catch (userErr) {
-                console.error("Gagal menarik data user:", userErr);
-                setNamaKetua("Gagal memuat nama");
+            // Cari user yang rolenya 'ketua_rayon' DAN id_rayon-nya cocok
+            const ketua = usersList.find(
+              (u) => u.role === "ketua_rayon" && u.id_rayon === data.rayon.id,
+            );
+
+            if (ketua) {
+              setNamaKetua(ketua.name);
+            } else {
+              setNamaKetua("Belum ada Ketua Rayon");
             }
+          } catch (userErr) {
+            console.error("Gagal menarik data user:", userErr);
+            setNamaKetua("Gagal memuat nama");
+          }
         }
-
       } catch (error) {
         console.error("Gagal memuat jadwal rayon:", error);
-        setErrorMsg(typeof error === 'string' ? error : "Terjadi kesalahan saat memuat data jadwal rayon.");
+        setErrorMsg(
+          typeof error === "string"
+            ? error
+            : "Terjadi kesalahan saat memuat data jadwal rayon.",
+        );
       } finally {
         setIsLoading(false);
       }
@@ -75,7 +75,9 @@ const JadwalIbadahRayonPage = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-white">
-        <p className="text-lg font-bold text-[#0D1282] animate-pulse">Memuat Jadwal Rayon...</p>
+        <p className="text-lg font-bold text-[#0D1282] animate-pulse">
+          Memuat Jadwal Rayon...
+        </p>
       </div>
     );
   }
@@ -84,11 +86,26 @@ const JadwalIbadahRayonPage = () => {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen bg-gray-50 px-4 text-center">
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 max-w-md">
-            <svg className="w-16 h-16 text-amber-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">Belum Terdaftar di Rayon</h2>
-            <p className="text-slate-600 mb-6 leading-relaxed">
-              Akun Anda saat ini belum dihubungkan ke Rayon mana pun. Silakan hubungi Admin atau Pendeta untuk mengatur penempatan Rayon Anda.
-            </p>
+          <svg
+            className="w-16 h-16 text-amber-500 mx-auto mb-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            ></path>
+          </svg>
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">
+            Belum Terdaftar di Rayon
+          </h2>
+          <p className="text-slate-600 mb-6 leading-relaxed">
+            Akun Anda saat ini belum dihubungkan ke Rayon mana pun. Silakan
+            hubungi Admin atau Pendeta untuk mengatur penempatan Rayon Anda.
+          </p>
         </div>
       </div>
     );
@@ -118,7 +135,9 @@ const JadwalIbadahRayonPage = () => {
         <div className="rayon-inner">
           <h1 className="page-title">Jadwal Ibadah Rayon</h1>
           <p className="page-subtext">Informasi jadwal ibadah rayon terbaru</p>
-          <p className="page-subtext font-bold text-[#D71313]">Tanggal: {today}</p>
+          <p className="page-subtext font-bold text-[#D71313]">
+            Tanggal: {today}
+          </p>
 
           {errorMsg && (
             <div className="mt-4 p-4 bg-red-50 text-red-700 border border-red-200 rounded-lg">
@@ -129,7 +148,8 @@ const JadwalIbadahRayonPage = () => {
           <section className="section-box">
             <h2 className="section-title">Informasi Rayon Anda</h2>
             <p className="info-text">
-              <strong>Nama Rayon:</strong> {rayonInfo?.nama_rayon || rayonInfo?.namaRayon || "-"}
+              <strong>Nama Rayon:</strong>{" "}
+              {rayonInfo?.nama_rayon || rayonInfo?.namaRayon || "-"}
             </p>
             <p className="info-text">
               <strong>Ketua Rayon:</strong> {namaKetua}
@@ -145,48 +165,83 @@ const JadwalIbadahRayonPage = () => {
           {jadwalAktif && Object.keys(jadwalAktif).length > 0 ? (
             <section className="section-box">
               <h2 className="section-title">Jadwal Ibadah Aktif</h2>
-              <p className="info-text"><strong>Tanggal Ibadah:</strong> {jadwalAktif.tanggal_ibadah || jadwalAktif.tanggalIbadah || "-"}</p>
-              <p className="info-text"><strong>Waktu:</strong> {jadwalAktif.waktu || "-"}</p>
-              <p className="info-text"><strong>Lokasi:</strong> {jadwalAktif.lokasi || "-"}</p>
-              <p className="info-text"><strong>Pelayan Firman:</strong> {jadwalAktif.pelayan_firman || jadwalAktif.pelayanFirman || "-"}</p>
-              <p className="info-text"><strong>Penanggung Jawab:</strong> {jadwalAktif.penanggung_jawab || jadwalAktif.penanggungJawab || "-"}</p>
-              <p className="active-status">Status: {jadwalAktif.status || "Aktif"}</p>
+              <p className="info-text">
+                <strong>Tanggal Ibadah:</strong>{" "}
+                {jadwalAktif.tanggal_ibadah || jadwalAktif.tanggalIbadah || "-"}
+              </p>
+              <p className="info-text">
+                <strong>Waktu:</strong> {jadwalAktif.waktu || "-"}
+              </p>
+              <p className="info-text">
+                <strong>Lokasi:</strong> {jadwalAktif.lokasi || "-"}
+              </p>
+              <p className="info-text">
+                <strong>Pelayan Firman:</strong>{" "}
+                {jadwalAktif.pelayan_firman || jadwalAktif.pelayanFirman || "-"}
+              </p>
+              <p className="info-text">
+                <strong>Penanggung Jawab:</strong>{" "}
+                {jadwalAktif.penanggung_jawab ||
+                  jadwalAktif.penanggungJawab ||
+                  "-"}
+              </p>
+              <p className="active-status">
+                Status: {jadwalAktif.status || "Aktif"}
+              </p>
             </section>
           ) : (
             <section className="section-box text-center py-10">
-              <p className="text-gray-500 font-medium text-lg">Belum ada jadwal ibadah aktif untuk rayon Anda saat ini.</p>
+              <p className="text-gray-500 font-medium text-lg">
+                Belum ada jadwal ibadah aktif untuk rayon Anda saat ini.
+              </p>
             </section>
           )}
 
           <section className="history-wrap">
             <h2 className="history-title">Riwayat Jadwal Sebelumnya</h2>
             {riwayatJadwal && riwayatJadwal.length > 0 ? (
-              
               /* PERBAIKAN: Tabel dirombak agar mirip dengan halaman ManajemenIbadahPage (tanpa kolom Aksi) */
               <div className="overflow-x-auto rounded-lg border border-[#CFCFCF] bg-white mt-6">
                 <table className="w-full border-collapse text-left text-[15px] text-[#0D1282]">
                   <thead>
                     <tr className="bg-[#EFEFEF]">
-                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">Judul Acara / Pelayan Firman</th>
-                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">Waktu & Tempat</th>
-                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">Status</th>
+                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">
+                        Judul Acara / Pelayan Firman
+                      </th>
+                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">
+                        Waktu & Tempat
+                      </th>
+                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">
+                        Status
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {riwayatJadwal.map((item) => (
-                      <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                      <tr
+                        key={item.id}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
                         <td className="border-b border-[#CFCFCF] px-5 py-4 align-top">
-                          <div className="font-bold text-lg">{item.pelayan_firman || item.pelayanFirman || "Ibadah Rayon"}</div>
+                          <div className="font-bold text-lg">
+                            {item.pelayan_firman ||
+                              item.pelayanFirman ||
+                              "Ibadah Rayon"}
+                          </div>
                         </td>
                         <td className="border-b border-[#CFCFCF] px-5 py-4 align-top">
-                          <div className="font-semibold">{item.tanggal_ibadah || item.tanggal}</div>
+                          <div className="font-semibold">
+                            {item.tanggal_ibadah || item.tanggal}
+                          </div>
                           <div className="text-sm text-gray-600 mt-1 font-medium">
                             📍 {item.lokasi}
                           </div>
                         </td>
                         <td className="border-b border-[#CFCFCF] px-5 py-4 align-middle">
-                          <span className={`px-3 py-1.5 rounded-md text-[13px] font-bold ${item.status === 'Selesai' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
-                            {item.status || 'Selesai'}
+                          <span
+                            className={`px-3 py-1.5 rounded-md text-[13px] font-bold ${item.status === "Selesai" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700"}`}
+                          >
+                            {item.status || "Selesai"}
                           </span>
                         </td>
                       </tr>
@@ -194,7 +249,6 @@ const JadwalIbadahRayonPage = () => {
                   </tbody>
                 </table>
               </div>
-
             ) : (
               <div className="border border-[#CFCFCF] rounded-lg p-8 text-center bg-white text-gray-500 mt-4 font-medium">
                 Belum ada riwayat ibadah rayon.

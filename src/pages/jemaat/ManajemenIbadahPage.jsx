@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import {
   getRayonSchedulesAPI,
   createRayonScheduleAPI,
@@ -22,13 +22,16 @@ export default function ManajemenIbadahPage() {
     end_time: "",
     location: "",
     description: "",
-    category: "Ibadah Rayon", 
-    day_of_week: "Minggu",    
-    status_publish: "published" 
+    category: "Ibadah Rayon",
+    day_of_week: "Minggu",
+    status_publish: "published",
   });
 
   const todayDate = new Date().toLocaleDateString("id-ID", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   useEffect(() => {
@@ -40,7 +43,7 @@ export default function ManajemenIbadahPage() {
     setIsLoading(true);
     try {
       const res = await getRayonSchedulesAPI();
-      
+
       // Menembus bungkusan JSON Axios dan Laravel
       let actualArray = [];
       if (res?.data?.data && Array.isArray(res.data.data)) {
@@ -60,7 +63,15 @@ export default function ManajemenIbadahPage() {
   };
 
   const getDayName = (dateString) => {
-    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const days = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+    ];
     const d = new Date(dateString);
     return days[d.getDay()];
   };
@@ -69,7 +80,7 @@ export default function ManajemenIbadahPage() {
     const { name, value } = e.target;
     setFormData((prev) => {
       const newData = { ...prev, [name]: value };
-      if (name === 'event_date' && value) {
+      if (name === "event_date" && value) {
         newData.day_of_week = getDayName(value);
       }
       return newData;
@@ -79,7 +90,10 @@ export default function ManajemenIbadahPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const payload = { ...formData, rayon_id: user?.id_rayon || formData.rayon_id };
+      const payload = {
+        ...formData,
+        rayon_id: user?.id_rayon || formData.rayon_id,
+      };
 
       if (isEditing) {
         await updateRayonScheduleAPI(editId, payload);
@@ -102,20 +116,24 @@ export default function ManajemenIbadahPage() {
     setFormData({
       rayon_id: item.rayon_id || user?.id_rayon || "",
       title: item.title || "",
-      event_date: item.event_date ? item.event_date.split('T')[0] : "",
+      event_date: item.event_date ? item.event_date.split("T")[0] : "",
       start_time: item.start_time || "",
       end_time: item.end_time || "",
       location: item.location || "",
       description: item.description || "",
       category: item.category || "Ibadah Rayon",
       day_of_week: item.day_of_week || "Minggu",
-      status_publish: item.status_publish || "published"
+      status_publish: item.status_publish || "published",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus jadwal ini secara permanen?")) {
+    if (
+      window.confirm(
+        "Apakah Anda yakin ingin menghapus jadwal ini secara permanen?",
+      )
+    ) {
       try {
         await deleteRayonScheduleAPI(id);
         alert("Jadwal berhasil dihapus.");
@@ -140,76 +158,148 @@ export default function ManajemenIbadahPage() {
       description: "",
       category: "Ibadah Rayon",
       day_of_week: "Minggu",
-      status_publish: "published"
+      status_publish: "published",
     });
   };
 
-  const inputClass = "w-full h-[64px] border border-[#D1D1D1] bg-white px-6 text-[18px] font-medium text-[#0D1282] placeholder:text-[#7A7A7A] outline-none focus:border-[#0D1282] rounded-lg";
+  const inputClass =
+    "w-full h-[64px] border border-[#D1D1D1] bg-white px-6 text-[18px] font-medium text-[#0D1282] placeholder:text-[#7A7A7A] outline-none focus:border-[#0D1282] rounded-lg";
   const labelClass = "mb-3 block text-[20px] font-semibold text-[#0D1282]";
 
   return (
-    <div className="min-h-screen bg-white text-[#0D1282]" style={{ fontFamily: "Montserrat, sans-serif" }}>
+    <div
+      className="min-h-screen bg-white text-[#0D1282]"
+      style={{ fontFamily: "Montserrat, sans-serif" }}
+    >
       <main className="px-6 pb-10 pt-10 bg-white">
         <div className="mx-auto max-w-[1760px]">
-          
           <section className="rounded-[24px] bg-[#0D1282] p-10 text-white shadow-sm">
-            <h1 className="font-sans text-[48px] font-bold leading-tight">Manajemen Ibadah Rayon</h1>
-            <p className="mt-6 text-[20px] font-medium text-[#EEEDED]">Kelola jadwal ibadah rayon secara terpusat dan terorganisir</p>
-            <p className="mt-2 text-[20px] font-medium text-[#EEEDED]">Tanggal: {todayDate}</p>
+            <h1 className="font-sans text-[48px] font-bold leading-tight">
+              Manajemen Ibadah Rayon
+            </h1>
+            <p className="mt-6 text-[20px] font-medium text-[#EEEDED]">
+              Kelola jadwal ibadah rayon secara terpusat dan terorganisir
+            </p>
+            <p className="mt-2 text-[20px] font-medium text-[#EEEDED]">
+              Tanggal: {todayDate}
+            </p>
 
             <div className="mt-8 flex justify-end">
-              <button onClick={() => { resetForm(); window.scrollTo({ top: 300, behavior: "smooth" }); }} className="rounded-[12px] bg-[#D71313] px-6 py-3 text-[22px] font-semibold text-white shadow-lg transition hover:bg-[#b10f10]">
+              <button
+                onClick={() => {
+                  resetForm();
+                  window.scrollTo({ top: 300, behavior: "smooth" });
+                }}
+                className="rounded-[12px] bg-[#D71313] px-6 py-3 text-[22px] font-semibold text-white shadow-lg transition hover:bg-[#b10f10]"
+              >
                 + Tambah Jadwal Ibadah
               </button>
             </div>
           </section>
 
           <section className="mt-10 rounded-[24px] bg-[#EEEDED] p-8 shadow-sm">
-            <h2 className="mb-8 text-[24px] font-semibold text-[#0D1282]">{isEditing ? "Form Edit Jadwal Ibadah" : "Form Tambah Jadwal Ibadah"}</h2>
+            <h2 className="mb-8 text-[24px] font-semibold text-[#0D1282]">
+              {isEditing
+                ? "Form Edit Jadwal Ibadah"
+                : "Form Tambah Jadwal Ibadah"}
+            </h2>
 
             <form onSubmit={handleSubmit} className="space-y-7">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 <div>
                   <label className={labelClass}>Nama Rayon (Otomatis)</label>
-                  <input className={`${inputClass} bg-gray-200 cursor-not-allowed text-gray-600`} value={`Rayon ID: ${user?.id_rayon || 'Belum diatur'}`} readOnly />
+                  <input
+                    className={`${inputClass} bg-gray-200 cursor-not-allowed text-gray-600`}
+                    value={`Rayon ID: ${user?.id_rayon || "Belum diatur"}`}
+                    readOnly
+                  />
                 </div>
                 <div>
                   <label className={labelClass}>Judul / Sesi Acara</label>
-                  <input name="title" value={formData.title} onChange={handleChange} className={inputClass} placeholder="Misal: Ibadah Rayon Minggu ke-1" required />
+                  <input
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    className={inputClass}
+                    placeholder="Misal: Ibadah Rayon Minggu ke-1"
+                    required
+                  />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
                 <div>
                   <label className={labelClass}>Tanggal Pelaksanaan</label>
-                  <input type="date" name="event_date" value={formData.event_date} onChange={handleChange} className={inputClass} required />
+                  <input
+                    type="date"
+                    name="event_date"
+                    value={formData.event_date}
+                    onChange={handleChange}
+                    className={inputClass}
+                    required
+                  />
                 </div>
                 <div>
                   <label className={labelClass}>Waktu Mulai</label>
-                  <input type="time" name="start_time" value={formData.start_time} onChange={handleChange} className={inputClass} required />
+                  <input
+                    type="time"
+                    name="start_time"
+                    value={formData.start_time}
+                    onChange={handleChange}
+                    className={inputClass}
+                    required
+                  />
                 </div>
                 <div>
                   <label className={labelClass}>Waktu Selesai (Opsional)</label>
-                  <input type="time" name="end_time" value={formData.end_time} onChange={handleChange} className={inputClass} />
+                  <input
+                    type="time"
+                    name="end_time"
+                    value={formData.end_time}
+                    onChange={handleChange}
+                    className={inputClass}
+                  />
                 </div>
               </div>
 
               <div>
                 <label className={labelClass}>Lokasi Ibadah</label>
-                <input name="location" value={formData.location} onChange={handleChange} className={inputClass} placeholder="Masukkan Alamat Lengkap / Nama Tuan Rumah" required />
+                <input
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className={inputClass}
+                  placeholder="Masukkan Alamat Lengkap / Nama Tuan Rumah"
+                  required
+                />
               </div>
 
               <div>
-                <label className={labelClass}>Keterangan Tambahan (Opsional)</label>
-                <textarea name="description" value={formData.description} onChange={handleChange} className="min-h-[160px] w-full border border-[#D1D1D1] bg-white px-6 py-6 text-[18px] font-medium text-[#0D1282] placeholder:text-[#7A7A7A] outline-none focus:border-[#0D1282] rounded-lg" placeholder="Tambahkan Keterangan (contoh: Nama Pelayan Firman, Penanggung Jawab, dll)" />
+                <label className={labelClass}>
+                  Keterangan Tambahan (Opsional)
+                </label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="min-h-[160px] w-full border border-[#D1D1D1] bg-white px-6 py-6 text-[18px] font-medium text-[#0D1282] placeholder:text-[#7A7A7A] outline-none focus:border-[#0D1282] rounded-lg"
+                  placeholder="Tambahkan Keterangan (contoh: Nama Pelayan Firman, Penanggung Jawab, dll)"
+                />
               </div>
 
               <div className="flex items-center gap-8 pt-4 border-t border-gray-300 mt-6 pt-8">
-                <button type="submit" className="min-w-[172px] rounded-[12px] bg-[#D71313] px-8 py-3 text-[20px] font-semibold text-white shadow-sm transition hover:bg-[#b10f10]">
+                <button
+                  type="submit"
+                  className="min-w-[172px] rounded-[12px] bg-[#D71313] px-8 py-3 text-[20px] font-semibold text-white shadow-sm transition hover:bg-[#b10f10]"
+                >
                   {isEditing ? "Update Jadwal" : "Simpan Jadwal"}
                 </button>
                 {isEditing && (
-                  <button type="button" onClick={resetForm} className="min-w-[172px] rounded-[12px] border border-[#D71313] bg-white px-8 py-3 text-[20px] font-semibold text-[#D71313] transition hover:bg-red-50">
+                  <button
+                    type="button"
+                    onClick={resetForm}
+                    className="min-w-[172px] rounded-[12px] border border-[#D71313] bg-white px-8 py-3 text-[20px] font-semibold text-[#D71313] transition hover:bg-red-50"
+                  >
                     Batal Edit
                   </button>
                 )}
@@ -218,46 +308,87 @@ export default function ManajemenIbadahPage() {
           </section>
 
           <section className="mt-10 rounded-[24px] bg-[#EEEDED] p-8 shadow-sm">
-            <h3 className="mb-6 text-[22px] font-bold text-[#0D1282]">Daftar Jadwal Ibadah Rayon</h3>
+            <h3 className="mb-6 text-[22px] font-bold text-[#0D1282]">
+              Daftar Jadwal Ibadah Rayon
+            </h3>
 
             {isLoading ? (
-              <div className="text-center py-10 font-bold text-gray-500 animate-pulse">Memuat Data Jadwal...</div>
+              <div className="text-center py-10 font-bold text-gray-500 animate-pulse">
+                Memuat Data Jadwal...
+              </div>
             ) : (
               <div className="overflow-x-auto rounded-lg border border-[#CFCFCF] bg-white">
                 <table className="w-full border-collapse text-left text-[15px] text-[#0D1282]">
                   <thead>
                     <tr className="bg-[#EFEFEF]">
-                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">Judul Acara</th>
-                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">Waktu & Tempat</th>
-                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold text-center">Aksi</th>
+                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">
+                        Judul Acara
+                      </th>
+                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold">
+                        Waktu & Tempat
+                      </th>
+                      <th className="border-b border-[#CFCFCF] px-5 py-4 font-bold text-center">
+                        Aksi
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {schedules.length > 0 ? (
                       schedules.map((item) => (
-                        <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                        <tr
+                          key={item.id}
+                          className="hover:bg-gray-50 transition-colors"
+                        >
                           <td className="border-b border-[#CFCFCF] px-5 py-4 align-top">
-                            <div className="font-bold text-lg">{item.title}</div>
-                            {item.description && <div className="text-sm text-gray-600 mt-1 line-clamp-2">{item.description}</div>}
+                            <div className="font-bold text-lg">
+                              {item.title}
+                            </div>
+                            {item.description && (
+                              <div className="text-sm text-gray-600 mt-1 line-clamp-2">
+                                {item.description}
+                              </div>
+                            )}
                           </td>
                           <td className="border-b border-[#CFCFCF] px-5 py-4 align-top">
-                            <div className="font-semibold">{item.event_date ? new Date(item.event_date).toLocaleDateString('id-ID') : '-'}</div>
+                            <div className="font-semibold">
+                              {item.event_date
+                                ? new Date(item.event_date).toLocaleDateString(
+                                    "id-ID",
+                                  )
+                                : "-"}
+                            </div>
                             <div className="text-sm text-gray-600 mt-1">
-                              ⏰ {item.start_time} - {item.end_time || 'Selesai'}
+                              ⏰ {item.start_time} -{" "}
+                              {item.end_time || "Selesai"}
                             </div>
                             <div className="text-sm text-gray-600 mt-1 font-medium">
                               📍 {item.location}
                             </div>
                           </td>
                           <td className="border-b border-[#CFCFCF] px-5 py-4 text-center align-middle">
-                            <button onClick={() => handleEdit(item)} className="text-[#0D1282] font-bold mr-4 hover:underline">Edit</button>
-                            <button onClick={() => handleDelete(item.id)} className="text-[#D71313] font-bold hover:underline">Hapus</button>
+                            <button
+                              onClick={() => handleEdit(item)}
+                              className="text-[#0D1282] font-bold mr-4 hover:underline"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDelete(item.id)}
+                              className="text-[#D71313] font-bold hover:underline"
+                            >
+                              Hapus
+                            </button>
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="3" className="px-5 py-10 text-center text-gray-500 font-medium text-lg">Belum ada jadwal ibadah yang didaftarkan.</td>
+                        <td
+                          colSpan="3"
+                          className="px-5 py-10 text-center text-gray-500 font-medium text-lg"
+                        >
+                          Belum ada jadwal ibadah yang didaftarkan.
+                        </td>
                       </tr>
                     )}
                   </tbody>

@@ -1,37 +1,14 @@
-import React, { useState } from "react";
-import {
-  pengakuanIman,
-  strukturPelayanan,
-  profilContent,
-} from "../../data/profilData";
+import React from "react";
+import { profilContent } from "../../data/profilData";
 
 export default function ProfilGerejaPage() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [pendetaList, setPendetaList] = useState([]);
-  const [loadingPendeta, setLoadingPendeta] = useState(true);
-
-  React.useEffect(() => {
-    const fetchPendeta = async () => {
-      try {
-        const response = await fetch("http://localhost:8001/api/users?role=pendeta");
-        const result = await response.json();
-        setPendetaList(result.data || []);
-      } catch (error) {
-        console.error("Gagal mengambil data pendeta:", error);
-      } finally {
-        setLoadingPendeta(false);
-      }
-    };
-    fetchPendeta();
-  }, []);
-
-  const displayedIman = isExpanded ? pengakuanIman : pengakuanIman.slice(0, 4);
-
   return (
-    <div className="min-h-screen bg-white text-black" style={{ fontFamily: "Montserrat, sans-serif" }}>
+    <div
+      className="min-h-screen bg-white text-black"
+      style={{ fontFamily: "Montserrat, sans-serif" }}
+    >
       <main className="pb-10">
         <div className="mx-auto w-full max-w-[1440px]">
-
           {/* HEADER */}
           <section className="pt-[34px] text-center">
             <h1 className="text-[44px] font-extrabold tracking-[0.06em] text-[#0D1282]">
@@ -116,9 +93,7 @@ export default function ProfilGerejaPage() {
             <div className="mx-auto grid max-w-[1100px] grid-cols-1 gap-8 md:grid-cols-2">
               <div className="bg-white p-10 rounded-xl shadow-sm border-t-4 border-[#0D1282]">
                 <h3 className="text-xl font-bold mb-4">VISI</h3>
-                <p className="text-gray-600 italic">
-                  "{profilContent.visi}"
-                </p>
+                <p className="text-gray-600 italic">"{profilContent.visi}"</p>
               </div>
               <div className="bg-white p-10 rounded-xl shadow-sm border-t-4 border-[#D71313]">
                 <h3 className="text-xl font-bold mb-4">MISI</h3>
@@ -130,7 +105,6 @@ export default function ProfilGerejaPage() {
               </div>
             </div>
           </section>
-
         </div>
       </main>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { getPublicGaleri } from "../../services/contentService"; 
+import { getPublicGaleri } from "../../services/contentService";
 import { galeriData } from "../../data/galeriData";
+import { contentStorageUrl } from "../../config/mediaUrls";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -36,25 +37,39 @@ export default function GaleriKegiatanPage() {
   const formattedItems = useMemo(() => {
     return kegiatanData.map((item) => ({
       id: item.id,
-      judul: item.judul, 
-      tanggal: item.tanggal_kegiatan ? new Date(item.tanggal_kegiatan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-',
-      gambar: item.path_foto ? `http://localhost:8002/storage/${item.path_foto}` : "https://placehold.co/600x400/0D1282/FFFFFF?text=GPdI+Sibulele",
-      kategori: item.kategori || "Umum", 
-      deskripsi: item.deskripsi || "Tidak ada deskripsi."
+      judul: item.judul,
+      tanggal: item.tanggal_kegiatan
+        ? new Date(item.tanggal_kegiatan).toLocaleDateString("id-ID", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })
+        : "-",
+      gambar: item.path_foto
+        ? `${contentStorageUrl}/${item.path_foto}`
+        : "https://placehold.co/600x400/0D1282/FFFFFF?text=GPdI+Sibulele",
+      kategori: item.kategori || "Umum",
+      deskripsi: item.deskripsi || "Tidak ada deskripsi.",
     }));
   }, [kegiatanData]);
 
   // Logika Filter Pencarian & Kategori
   const filteredItems = useMemo(() => {
     return formattedItems.filter((item) => {
-      const matchKategori = kategori === "Semua Kegiatan" || item.kategori === kategori;
-      const matchSearch = item.judul.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchKategori =
+        kategori === "Semua Kegiatan" || item.kategori === kategori;
+      const matchSearch = item.judul
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
       return matchKategori && matchSearch;
     });
   }, [kategori, searchQuery, formattedItems]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredItems.length / ITEMS_PER_PAGE),
+  );
 
   const paginatedItems = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -75,7 +90,10 @@ export default function GaleriKegiatanPage() {
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className="min-h-screen bg-white text-black" style={{ fontFamily: "Montserrat, sans-serif" }}>
+    <div
+      className="min-h-screen bg-white text-black"
+      style={{ fontFamily: "Montserrat, sans-serif" }}
+    >
       <main className="pb-10">
         <div className="mx-auto w-full max-w-[1440px]">
           {/* Heading */}
@@ -114,14 +132,18 @@ export default function GaleriKegiatanPage() {
 
           {/* Filter & Search */}
           <section className="mt-[60px] px-4">
-            <form onSubmit={handleSearch} className="mx-auto flex w-full max-w-[700px] flex-col md:flex-row items-center justify-center gap-[18px]">
+            <form
+              onSubmit={handleSearch}
+              className="mx-auto flex w-full max-w-[700px] flex-col md:flex-row items-center justify-center gap-[18px]"
+            >
               <div className="relative w-full md:w-auto">
                 <select
                   value={kategori}
                   onChange={handleKategoriChange}
                   className="h-[60px] w-full md:w-[220px] appearance-none rounded-xl border border-gray-300 bg-white px-5 pr-[40px] text-[16px] font-medium text-gray-700 outline-none focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282] shadow-sm transition-all cursor-pointer"
                   style={{
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%234B5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
+                    backgroundImage:
+                      "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%234B5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "right 16px center",
                     backgroundSize: "16px",
@@ -144,7 +166,10 @@ export default function GaleriKegiatanPage() {
                 className="h-[60px] flex-1 w-full rounded-xl border border-gray-300 bg-white px-5 text-[16px] font-medium text-gray-700 outline-none placeholder:text-gray-400 focus:border-[#0D1282] focus:ring-1 focus:ring-[#0D1282] shadow-sm transition-all"
               />
 
-              <button type="submit" className="h-[60px] w-full md:w-[120px] rounded-xl bg-[#0D1282] text-[16px] font-bold text-white shadow-md transition-all hover:bg-[#0a0e66]">
+              <button
+                type="submit"
+                className="h-[60px] w-full md:w-[120px] rounded-xl bg-[#0D1282] text-[16px] font-bold text-white shadow-md transition-all hover:bg-[#0a0e66]"
+              >
                 Cari
               </button>
             </form>
@@ -154,9 +179,9 @@ export default function GaleriKegiatanPage() {
           <section className="mt-[70px] px-[30px]">
             <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
               {loading ? (
-                 <div className="col-span-full py-20 text-center text-lg font-semibold text-gray-500 animate-pulse">
-                   Memuat dokumentasi kegiatan...
-                 </div>
+                <div className="col-span-full py-20 text-center text-lg font-semibold text-gray-500 animate-pulse">
+                  Memuat dokumentasi kegiatan...
+                </div>
               ) : paginatedItems.length > 0 ? (
                 paginatedItems.map((item) => (
                   <div
@@ -198,11 +223,25 @@ export default function GaleriKegiatanPage() {
             <section className="mt-[80px]">
               <div className="mx-auto flex w-full max-w-[700px] items-center justify-center gap-3">
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage === 1}
                   className="flex h-12 w-12 items-center justify-center rounded-xl bg-white border border-gray-300 text-[#0D1282] shadow-sm transition hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/></svg>
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
                 </button>
 
                 {pageNumbers.map((num) => (
@@ -220,11 +259,25 @@ export default function GaleriKegiatanPage() {
                 ))}
 
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
                   disabled={currentPage === totalPages}
                   className="flex h-12 w-12 items-center justify-center rounded-xl bg-white border border-gray-300 text-[#0D1282] shadow-sm transition hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/></svg>
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
                 </button>
               </div>
             </section>

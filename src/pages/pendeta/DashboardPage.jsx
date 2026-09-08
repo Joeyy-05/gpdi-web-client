@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import { getAllUsers } from "../../services/userService";
 import { getAllWorship, getAllActivity } from "../../services/eventService";
 
@@ -19,7 +19,7 @@ const DashboardPage = () => {
         const [usersRes, worshipRes, activityRes] = await Promise.all([
           getAllUsers().catch(() => []),
           getAllWorship().catch(() => ({ data: [] })),
-          getAllActivity().catch(() => ({ data: [] }))
+          getAllActivity().catch(() => ({ data: [] })),
         ]);
 
         const usersList = usersRes?.data || usersRes || [];
@@ -29,7 +29,7 @@ const DashboardPage = () => {
         setStats({
           users: usersList.length,
           jadwal: worshipList.length,
-          kegiatan: activityList.length
+          kegiatan: activityList.length,
         });
       } catch (error) {
         console.error("Kesalahan saat memuat data dashboard:", error);
@@ -65,9 +65,15 @@ const DashboardPage = () => {
             👥
           </div>
           <div>
-            <p className="text-slate-500 text-sm font-medium">Total Akun User</p>
+            <p className="text-slate-500 text-sm font-medium">
+              Total Akun User
+            </p>
             <p className="text-2xl font-bold text-slate-800">
-              {isLoading ? <span className="animate-pulse text-slate-300">...</span> : stats.users}
+              {isLoading ? (
+                <span className="animate-pulse text-slate-300">...</span>
+              ) : (
+                stats.users
+              )}
             </p>
           </div>
         </div>
@@ -82,7 +88,11 @@ const DashboardPage = () => {
               Jadwal Ibadah Terdaftar
             </p>
             <p className="text-2xl font-bold text-slate-800">
-              {isLoading ? <span className="animate-pulse text-slate-300">...</span> : stats.jadwal}
+              {isLoading ? (
+                <span className="animate-pulse text-slate-300">...</span>
+              ) : (
+                stats.jadwal
+              )}
             </p>
           </div>
         </div>
@@ -95,7 +105,11 @@ const DashboardPage = () => {
           <div>
             <p className="text-slate-500 text-sm font-medium">Total Kegiatan</p>
             <p className="text-2xl font-bold text-slate-800">
-              {isLoading ? <span className="animate-pulse text-slate-300">...</span> : stats.kegiatan}
+              {isLoading ? (
+                <span className="animate-pulse text-slate-300">...</span>
+              ) : (
+                stats.kegiatan
+              )}
             </p>
           </div>
         </div>
@@ -123,7 +137,8 @@ const DashboardPage = () => {
         </h3>
         <p className="text-slate-500 max-w-md">
           Gunakan menu navigasi di sebelah kiri untuk mulai mengelola data
-          jemaat, jadwal ibadah, serta konten publikasi gereja. Seluruh perubahan akan otomatis disinkronisasi ke aplikasi jemaat.
+          jemaat, jadwal ibadah, serta konten publikasi gereja. Seluruh
+          perubahan akan otomatis disinkronisasi ke aplikasi jemaat.
         </p>
       </div>
     </div>

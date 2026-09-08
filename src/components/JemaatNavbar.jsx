@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.png";
 import { UserCircle } from "lucide-react"; // Ikon Bell telah dihapus
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 
 export default function JemaatNavbar() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -16,9 +16,13 @@ export default function JemaatNavbar() {
   ];
 
   // 2. Gabungkan secara kondisional dan immutable
-  const navItems = user?.role === 'ketua_rayon' 
-    ? [...baseNavItems, { label: "Manajemen Ibadah", path: "/manajemen-ibadah" }]
-    : baseNavItems;
+  const navItems =
+    user?.role === "ketua_rayon"
+      ? [
+          ...baseNavItems,
+          { label: "Manajemen Ibadah", path: "/manajemen-ibadah" },
+        ]
+      : baseNavItems;
 
   const handleLogout = async () => {
     try {
@@ -32,7 +36,6 @@ export default function JemaatNavbar() {
   return (
     <header className="w-full bg-[#0D1282] text-white shadow-md sticky top-0 z-50">
       <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-4 md:px-8">
-        
         {/* LEFT - Logo & Title */}
         <div className="flex items-center gap-3">
           <img
@@ -69,20 +72,23 @@ export default function JemaatNavbar() {
           {/* Fitur Notifikasi telah dihilangkan dari sini */}
 
           {isAuthenticated ? (
-            <Link 
-              to="/profil" 
+            <Link
+              to="/profil"
               className="hidden md:flex items-center gap-2 transition-colors hover:text-gray-300 cursor-pointer"
               title="Ke Halaman Profil"
             >
               <UserCircle size={20} strokeWidth={2} className="text-white/80" />
               <span className="text-[13px] font-semibold whitespace-nowrap">
-                {user?.nama_lengkap || user?.name || user?.email || "Jemaat GPdI"}
+                {user?.nama_lengkap ||
+                  user?.name ||
+                  user?.email ||
+                  "Jemaat GPdI"}
               </span>
             </Link>
           ) : (
-             <span className="text-[13px] font-semibold whitespace-nowrap hidden md:block">
-               Tamu
-             </span>
+            <span className="text-[13px] font-semibold whitespace-nowrap hidden md:block">
+              Tamu
+            </span>
           )}
 
           {isAuthenticated ? (
