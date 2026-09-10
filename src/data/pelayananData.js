@@ -11,29 +11,24 @@ export const pelayananData = {
     {
       id: 1,
       nama: "Pelayanan Sekolah Minggu",
-      deskripsiSingkat: "Deskripsi singkat pelayanan ini, menjelaskan secara ringkas apa yang ditawarkan dan manfaatnya bagi jemaat.",
+      deskripsiSingkat: "Pelayanan pembinaan rohani untuk anak-anak melalui pengajaran firman Tuhan, pujian, dan kegiatan kreatif yang menyenangkan.",
       deskripsiLengkap: "Pelayanan Sekolah Minggu berfokus pada pembinaan rohani anak-anak melalui pengajaran firman Tuhan, pujian, aktivitas kreatif, dan pembentukan karakter Kristiani sejak dini.",
       jadwal: "Minggu, 08.00 WIB",
-      penanggungJawab: "Ibu Ester Siahaan",
       syarat: [
         "Memiliki hati untuk melayani anak-anak",
         "Sudah menerima baptisan air",
         "Sabar dan komunikatif",
         "Bersedia mengikuti pembinaan pelayan",
       ],
-      // GANTI URL GAMBAR DENGAN TAUTAN YANG DIJAMIN AKTIF INI
-      gambar: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000&auto=format&fit=crop", 
+      gambar: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000&auto=format&fit=crop",
     },
-    
     {
       id: 2,
       nama: "Pelayanan Pemuda & Remaja",
-      deskripsiSingkat:
-        "Deskripsi singkat pelayanan ini, menjelaskan secara ringkas apa yang ditawarkan dan manfaatnya bagi jemaat.",
+      deskripsiSingkat: "Wadah pertumbuhan rohani generasi muda melalui ibadah, persekutuan, pembinaan karakter, dan kegiatan kebersamaan.",
       deskripsiLengkap:
         "Pelayanan Pemuda dan Remaja menjadi wadah pertumbuhan rohani generasi muda melalui ibadah, persekutuan, pembinaan karakter, dan kegiatan kebersamaan.",
       jadwal: "Sabtu, 18.00 WIB",
-      penanggungJawab: "Ps. Daniel Sitohang",
       syarat: [
         "Berusia 15-30 tahun",
         "Aktif dalam persekutuan",
@@ -46,12 +41,10 @@ export const pelayananData = {
     {
       id: 3,
       nama: "Pelayanan Wanita",
-      deskripsiSingkat:
-        "Deskripsi singkat pelayanan ini, menjelaskan secara ringkas apa yang ditawarkan dan manfaatnya bagi jemaat.",
+      deskripsiSingkat: "Membangun iman kaum wanita melalui ibadah, doa, pembinaan keluarga, dan kegiatan pelayanan sosial di tengah jemaat.",
       deskripsiLengkap:
         "Pelayanan Wanita bertujuan membangun iman kaum wanita melalui ibadah, doa, pembinaan keluarga, dan kegiatan pelayanan sosial di tengah jemaat.",
       jadwal: "Kamis, 16.00 WIB",
-      penanggungJawab: "Ibu Ruth Marpaung",
       syarat: [
         "Kaum wanita/ibu jemaat GPdI Sibulele",
         "Memiliki kerinduan untuk bertumbuh",
@@ -64,12 +57,10 @@ export const pelayananData = {
     {
       id: 4,
       nama: "Pelayanan Pria",
-      deskripsiSingkat:
-        "Deskripsi singkat pelayanan ini, menjelaskan secara ringkas apa yang ditawarkan dan manfaatnya bagi jemaat.",
+      deskripsiSingkat: "Sarana pembinaan iman bagi kaum pria agar bertumbuh dalam tanggung jawab rohani, keluarga, dan keterlibatan aktif di gereja.",
       deskripsiLengkap:
         "Pelayanan Pria menjadi sarana pembinaan iman bagi kaum pria agar bertumbuh dalam tanggung jawab rohani, keluarga, dan keterlibatan aktif dalam gereja.",
       jadwal: "Jumat, 19.00 WIB",
-      penanggungJawab: "Bpk. Jonatan Simanjuntak",
       syarat: [
         "Kaum pria/bapak jemaat GPdI Sibulele",
         "Berkomitmen hadir dalam persekutuan",
@@ -82,12 +73,10 @@ export const pelayananData = {
     {
       id: 5,
       nama: "Pelayanan Musik",
-      deskripsiSingkat:
-        "Deskripsi singkat pelayanan ini, menjelaskan secara ringkas apa yang ditawarkan dan manfaatnya bagi jemaat.",
+      deskripsiSingkat: "Melayani melalui pujian dan penyembahan dalam ibadah umum maupun khusus, termasuk latihan rutin dan pengembangan talenta.",
       deskripsiLengkap:
         "Pelayanan Musik melayani melalui pujian dan penyembahan dalam ibadah umum maupun khusus, termasuk latihan rutin, pengembangan talenta, dan koordinasi tim musik.",
       jadwal: "Jumat, 19.00 WIB",
-      penanggungJawab: "Sdr. David Manurung",
       syarat: [
         "Memiliki bakat musik/vokal",
         "Lulus seleksi/audisi tim musik",
@@ -99,12 +88,10 @@ export const pelayananData = {
     {
       id: 6,
       nama: "Pelayanan Multimedia",
-      deskripsiSingkat:
-        "Deskripsi singkat pelayanan ini, menjelaskan secara ringkas apa yang ditawarkan dan manfaatnya bagi jemaat.",
+      deskripsiSingkat: "Mendukung jalannya ibadah melalui operator slide, proyektor, audio visual, dokumentasi, dan kebutuhan teknis digital gereja.",
       deskripsiLengkap:
         "Pelayanan Multimedia mendukung jalannya ibadah melalui operator slide, proyektor, audio visual, dokumentasi, dan kebutuhan teknis digital gereja.",
       jadwal: "Sabtu, 17.00 WIB",
-      penanggungJawab: "Bpk. Josua Manurung",
       syarat: [
         "Memiliki ketertarikan di bidang IT/Visual",
         "Teliti dan bertanggung jawab",

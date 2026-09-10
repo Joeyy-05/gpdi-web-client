@@ -1,6 +1,6 @@
 import React from "react";
-import { ArrowRight, Heart, Sparkles } from "lucide-react";
-import { profilContent } from "../../data/profilData";
+import { ArrowRight, Heart, Sparkles, Users, Church } from "lucide-react";
+import { profilContent, riwayatPemimpin } from "../../data/profilData";
 
 export default function ProfilGerejaPage() {
   return (
@@ -73,7 +73,7 @@ export default function ProfilGerejaPage() {
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-12">
+        <section className="mx-auto grid max-w-7xl gap-12 px-5 pt-16 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:px-12">
           <div className="h-[380px] overflow-hidden rounded-2xl shadow-lg sm:h-[470px]">
             <img
               src={profilContent.gambarSejarah}
@@ -93,9 +93,48 @@ export default function ProfilGerejaPage() {
                 <p key={index}>{text}</p>
               ))}
             </div>
+
+            {/* Timeline Kepemimpinan */}
+            <div className="mt-8">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#0D1282]/60 mb-4">
+                Perjalanan kepemimpinan
+              </p>
+              <div className="space-y-3">
+                {riwayatPemimpin.map((pemimpin, i) => (
+                  <div key={i} className="flex items-center gap-4">
+                    <div className={`h-3 w-3 rounded-full flex-shrink-0 ${i === riwayatPemimpin.length - 1 ? "bg-[#D71313]" : "bg-[#0D1282]/30"}`} />
+                    <div className="flex flex-1 items-center justify-between rounded-lg border border-slate-100 bg-white px-4 py-2.5 shadow-sm">
+                      <span className="text-sm font-semibold text-[#0D1282]">{pemimpin.nama}</span>
+                      <span className="text-xs font-bold text-slate-400">{pemimpin.periode}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="mt-8 flex items-center gap-3 text-sm font-bold text-[#0D1282]">
               <Heart size={18} className="text-[#D71313]" /> Melayani dengan
               kasih dan ketulusan
+            </div>
+          </div>
+        </section>
+
+        {/* Statistik Gereja */}
+        <section className="mx-auto mt-16 max-w-7xl px-5 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2">
+            <div className="flex items-center gap-5 rounded-2xl border border-blue-100 bg-blue-50/60 px-6 py-5">
+              <Users size={32} className="text-[#0D1282] flex-shrink-0" />
+              <div>
+                <p className="text-3xl font-extrabold text-[#0D1282]">178</p>
+                <p className="text-xs font-semibold text-slate-500 mt-0.5">Jemaat Aktif</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-5 rounded-2xl border border-red-100 bg-red-50/60 px-6 py-5">
+              <Church size={32} className="text-[#D71313] flex-shrink-0" />
+              <div>
+                <p className="text-3xl font-extrabold text-[#D71313]">34</p>
+                <p className="text-xs font-semibold text-slate-500 mt-0.5">Gereja GPDI Wilayah</p>
+              </div>
             </div>
           </div>
         </section>

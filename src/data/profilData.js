@@ -15,11 +15,19 @@ export const pengakuanIman = [
   "Kami percaya akan kebangkitan tubuh, hukuman kekal bagi orang berdosa, dan hidup kekal bagi orang percaya (Yoh. 5:28-29; Mat. 25:46; Why. 20:11-15).",
 ];
 
+// Struktur pelayanan sesuai dokumen resmi gereja
 export const strukturPelayanan = [
-  "Gembala/Pendeta",
-  "Wakil/Majelis",
-  "Koordinator Pelayanan",
-  "Pelayan",
+  "Bendahara sekaligus Ketua Organisasi",
+  "Ketua Organisasi Wilayah",
+  "Guru Sekolah Minggu",
+  "Pelayan Jemaat",
+];
+
+// Perjalanan kepemimpinan gereja
+export const riwayatPemimpin = [
+  { nama: "Pendeta A. Sitohang", periode: "1993–1998" },
+  { nama: "Pendeta HR. Sitohang", periode: "1998–2022" },
+  { nama: "Pendeta Vivi Nababan", periode: "2022–sekarang" },
 ];
 
 export const profilContent = {
@@ -27,15 +35,30 @@ export const profilContent = {
     "https://images.unsplash.com/photo-1544427920-c49ccfb85579?q=80&w=2000&auto=format&fit=crop",
   gambarSejarah:
     "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1000&auto=format&fit=crop",
+
+  // ============================================================
+  // SEJARAH — diisi dari dokumen resmi GPDI Sibulele
+  // ============================================================
   sejarah: [
-    "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.",
-    "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.",
+    "GPDI Sibulele merupakan salah satu gereja yang hadir sebagai tempat persekutuan, pelayanan, dan pertumbuhan rohani bagi jemaat. Perjalanan pelayanan GPDI Sibulele dimulai dari kegiatan ibadah sederhana yang dilakukan oleh para kakak dan jemaat di sebuah rumah kontrakan.",
+    "Dari persekutuan sederhana tersebut, pelayanan gereja terus berkembang hingga menjadi komunitas jemaat yang aktif dalam berbagai kegiatan pelayanan dan kerohanian. Sejak awal berdirinya, GPDI Sibulele telah dipimpin oleh beberapa pendeta yang turut berperan dalam membangun, membimbing, dan mengembangkan kehidupan rohani jemaat.",
+    "Kepemimpinan gereja terus berlanjut dari generasi ke generasi dengan semangat pelayanan dan komitmen untuk melayani Tuhan serta membangun jemaat. Perjalanan kepemimpinan GPDI Sibulele: Pendeta A. Sitohang (1993–1998), Pendeta HR. Sitohang (1998–2022), dan Pendeta Vivi Nababan (2022–sekarang).",
+    "Saat ini, GPDI Sibulele memiliki sekitar 178 jemaat aktif yang bersama-sama terlibat dalam kehidupan persekutuan dan pelayanan gereja. GPDI Sibulele juga berada dalam wilayah pelayanan yang terdiri dari 34 gereja GPDI.",
   ],
+
+  // ============================================================
+  // VISI — tetap sesuai nilai gereja
+  // ============================================================
   visi: "Menjadi gereja yang bertumbuh dalam kasih, iman, dan pengharapan, serta menjadi berkat bagi komunitas sekitar.",
+
+  // ============================================================
+  // MISI — diisi berdasarkan kegiatan rutin dan pelayanan gereja
+  // ============================================================
   misi: [
-    "Mengajarkan Firman Tuhan secara relevan.",
-    "Membangun persekutuan yang erat antar jemaat.",
-    "Melayani masyarakat dengan kasih Kristus.",
-    "Mendorong pertumbuhan rohani setiap anggota.",
+    "Melaksanakan Ibadah Raya dalam dua sesi sebagai pusat persekutuan jemaat.",
+    "Menyelenggarakan Ibadah Hari Rayon untuk mempererat persekutuan antar wilayah.",
+    "Melakukan kunjungan kepada jemaat yang disertai dengan renungan pagi.",
+    "Membangun kehidupan rohani melalui pengajaran Firman Tuhan yang relevan.",
+    "Melayani masyarakat sekitar dengan kasih Kristus.",
   ],
 };

@@ -61,7 +61,7 @@ export default function ProfilPage() {
         full_name: pData.full_name || "",
         phone_number: pData.phone_number || "",
         address: pData.address || "",
-        email: pData.user?.email || "Email tidak tersedia",
+        email: pData.email || "Email tidak tersedia",
         rayon: pData.rayon_id
           ? `Tergabung di Rayon ID: ${pData.rayon_id}`
           : "Belum Terdaftar",

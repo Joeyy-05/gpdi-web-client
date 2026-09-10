@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 // Impor API Event (yang sudah ada)
 import { getJadwalRayonJemaat } from "../../services/eventService";
-// PERBAIKAN: Impor API User untuk mengambil data jemaat & ketua
+// Impor API User untuk mengambil data jemaat & ketua
 import { getAllUsers } from "../../services/userService";
+// Impor API Pengumuman Rayon
+import { getRayonPengumuman } from "../../services/contentService";
 
 const JadwalIbadahRayonPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,8 +13,10 @@ const JadwalIbadahRayonPage = () => {
   const [rayonInfo, setRayonInfo] = useState(null);
   const [jadwalAktif, setJadwalAktif] = useState(null);
   const [riwayatJadwal, setRiwayatJadwal] = useState([]);
+  const [pengumumanRayon, setPengumumanRayon] = useState([]);
+  const [expandedPengumumanId, setExpandedPengumumanId] = useState(null);
 
-  // State baru khusus untuk menampung nama Ketua Rayon
+  // State untuk menampung nama Ketua Rayon
   const [namaKetua, setNamaKetua] = useState("Mencari data ketua...");
 
   useEffect(() => {
@@ -21,30 +25,28 @@ const JadwalIbadahRayonPage = () => {
       setErrorMsg("");
 
       try {
-        // 1. Ambil data Jadwal dan Rayon dari Event Service
-        const response = await getJadwalRayonJemaat();
+        // Ambil Jadwal Rayon & Pengumuman Rayon secara paralel
+        const [response, pengumumanRes] = await Promise.all([
+          getJadwalRayonJemaat(),
+          getRayonPengumuman().catch(() => ({ data: [] })),
+        ]);
+
         const data = response.data || response;
 
         setRayonInfo(data.rayon || null);
         setJadwalAktif(data.jadwalAktif || null);
         setRiwayatJadwal(data.riwayat || []);
+        setPengumumanRayon(pengumumanRes.data || []);
 
-        // 2. SOLUSI 1: Jika user punya rayon, cari nama ketuanya dari User Service
+        // Cari nama Ketua Rayon dari User Service
         if (data.rayon && data.rayon.id) {
           try {
             const usersResponse = await getAllUsers();
             const usersList = usersResponse.data || usersResponse;
-
-            // Cari user yang rolenya 'ketua_rayon' DAN id_rayon-nya cocok
             const ketua = usersList.find(
               (u) => u.role === "ketua_rayon" && u.id_rayon === data.rayon.id,
             );
-
-            if (ketua) {
-              setNamaKetua(ketua.name);
-            } else {
-              setNamaKetua("Belum ada Ketua Rayon");
-            }
+            setNamaKetua(ketua ? ketua.name : "Belum ada Ketua Rayon");
           } catch (userErr) {
             console.error("Gagal menarik data user:", userErr);
             setNamaKetua("Gagal memuat nama");
@@ -160,6 +162,72 @@ const JadwalIbadahRayonPage = () => {
             <p className="muted-note">
               “Informasi jadwal diperbarui secara real-time oleh Ketua Rayon.”
             </p>
+          </section>
+
+          {/* ---- SECTION PENGUMUMAN RAYON ---- */}
+          <section className="section-box">
+            <h2 className="section-title">&#128226; Pengumuman Rayon</h2>
+            {pengumumanRayon.length === 0 ? (
+              <p className="info-text" style={{ color: "#6E6E6E", fontStyle: "italic" }}>
+                Belum ada pengumuman khusus untuk rayon Anda saat ini.
+              </p>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                {pengumumanRayon.map((item) => {
+                  const isExpanded = expandedPengumumanId === item.id;
+                  return (
+                    <div
+                      key={item.id}
+                      style={{
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "12px",
+                        padding: "18px 20px",
+                        background: "#f8faff",
+                      }}
+                    >
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px" }}>
+                        <p className="info-text" style={{ fontWeight: 800, color: "#0D1282", margin: 0 }}>
+                          {item.judul}
+                        </p>
+                        <span style={{ fontSize: "12px", color: "#9ca3af", whiteSpace: "nowrap" }}>
+                          {new Date(item.created_at).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
+                        </span>
+                      </div>
+                      <p
+                        className="info-text"
+                        style={{
+                          marginTop: "10px",
+                          color: "#475569",
+                          display: "-webkit-box",
+                          WebkitLineClamp: isExpanded ? "unset" : 3,
+                          WebkitBoxOrient: "vertical",
+                          overflow: isExpanded ? "visible" : "hidden",
+                          whiteSpace: "pre-wrap",
+                        }}
+                      >
+                        {item.isi}
+                      </p>
+                      <button
+                        onClick={() => setExpandedPengumumanId(isExpanded ? null : item.id)}
+                        style={{
+                          marginTop: "10px",
+                          fontSize: "13px",
+                          fontWeight: 700,
+                          color: "#0D1282",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: 0,
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {isExpanded ? "Tutup" : "Baca selengkapnya"}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </section>
 
           {jadwalAktif && Object.keys(jadwalAktif).length > 0 ? (

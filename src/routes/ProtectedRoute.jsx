@@ -11,6 +11,11 @@ const ProtectedRoute = ({ allowedRoles }) => {
   }
 
   if (allowedRoles && !allowedRoles.includes(user?.role)) {
+    // Admin/pendeta yang salah route → ke dashboard
+    if (user?.role === "admin" || user?.role === "pendeta") {
+      return <Navigate to="/dashboard" replace />;
+    }
+    // Jemaat/ketua_rayon yang salah route → ke halaman jemaat
     return <Navigate to="/ibadah-rayon" replace />;
   }
 

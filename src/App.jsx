@@ -85,9 +85,9 @@ function App() {
               />
               <Route path="/profil" element={<ProfilPage />} />
 
-              {/* Halaman Khusus Ketua Rayon */}
+              {/* Halaman Manajemen Ibadah (Ketua Rayon + Admin + Pendeta) */}
               <Route
-                element={<ProtectedRoute allowedRoles={["ketua_rayon"]} />}
+                element={<ProtectedRoute allowedRoles={["ketua_rayon", "admin", "pendeta"]} />}
               >
                 <Route
                   path="/manajemen-ibadah"
@@ -105,7 +105,7 @@ function App() {
           >
             <Route element={<AdminLayout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+              <Route element={<ProtectedRoute allowedRoles={["admin", "pendeta"]} />}>
                 <Route path="/dashboard/jemaat" element={<JemaatPage />} />
               </Route>
               <Route path="/dashboard/konten" element={<KontenPage />} />

@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Megaphone } from "lucide-react";
 import { pengumumanData } from "../../data/pengumumanData";
-import { getAllPengumuman } from "../../services/contentService";
+import { getPublicPengumuman } from "../../services/contentService";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -18,13 +18,9 @@ export default function PengumumanPage() {
     const fetchPengumuman = async () => {
       setLoading(true);
       try {
-        const res = await getAllPengumuman();
-
-        // Memastikan hanya pengumuman berstatus "Aktif" yang muncul di halaman publik
-        const activePengumuman = (res.data || []).filter(
-          (item) => item.status === "Aktif",
-        );
-        setPengumumanList(activePengumuman);
+        const res = await getPublicPengumuman();
+        // Backend sudah memfilter hanya pengumuman scope 'publik' & status 'Aktif'
+        setPengumumanList(res.data || []);
       } catch (error) {
         console.error("Gagal memuat pengumuman:", error);
       } finally {

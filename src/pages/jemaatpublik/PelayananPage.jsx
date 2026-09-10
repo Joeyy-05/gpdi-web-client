@@ -132,19 +132,10 @@ export default function PelayananPage() {
                       {selectedItem.nama}
                     </h3>
 
-                    <div className="mt-6 space-y-3 text-[18px] text-gray-700">
-                      <p>
-                        <span className="font-bold text-[#0D1282]">
-                          Jadwal:
-                        </span>{" "}
-                        {selectedItem.jadwal}
-                      </p>
-                      <p>
-                        <span className="font-bold text-[#0D1282]">
-                          Penanggung Jawab:
-                        </span>{" "}
-                        {selectedItem.penanggungJawab}
-                      </p>
+                    <div className="mt-6">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-sm font-bold text-[#0D1282]">
+                        🗓 {selectedItem.jadwal}
+                      </span>
                     </div>
 
                     <p className="mt-8 text-[18px] leading-[1.8] text-gray-600 italic">

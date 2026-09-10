@@ -13,6 +13,7 @@ import {
   updateGaleri,
   deleteGaleri,
 } from "../../services/contentService";
+import { getAllRayon } from "../../services/eventService";
 import { contentStorageUrl } from "../../config/mediaUrls";
 
 const KontenPage = () => {
@@ -20,6 +21,7 @@ const KontenPage = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [rayonList, setRayonList] = useState([]);
 
   // State Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,6 +58,19 @@ const KontenPage = () => {
       setIsLoading(false);
     }
   }, [activeTab]);
+
+  // Fetch daftar rayon sekali saat komponen pertama kali dimuat
+  useEffect(() => {
+    const fetchRayon = async () => {
+      try {
+        const res = await getAllRayon();
+        setRayonList(res.data || []);
+      } catch {
+        // Gagal fetch rayon tidak perlu blokir UI
+      }
+    };
+    fetchRayon();
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -584,9 +599,14 @@ const KontenPage = () => {
                         </label>
                         <select
                           value={formData.scope}
-                          onChange={(e) =>
-                            setFormData({ ...formData, scope: e.target.value })
-                          }
+                          onChange={(e) => {
+                            // Reset id_rayon kalau bukan rayon
+                            setFormData({
+                              ...formData,
+                              scope: e.target.value,
+                              id_rayon: e.target.value !== "rayon" ? "" : formData.id_rayon,
+                            });
+                          }}
                           className="w-full px-3 py-2 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-600 outline-none"
                         >
                           <option value="publik">Publik</option>
@@ -596,6 +616,37 @@ const KontenPage = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Dropdown Pilih Rayon — muncul hanya jika scope === 'rayon' */}
+                  {activeTab === "pengumuman" && formData.scope === "rayon" && (
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-1">
+                        Pilih Rayon Target{" "}
+                        <span className="text-red-500">*</span>
+                      </label>
+                      {rayonList.length === 0 ? (
+                        <p className="text-xs text-slate-400 italic">
+                          Memuat daftar rayon...
+                        </p>
+                      ) : (
+                        <select
+                          required
+                          value={formData.id_rayon}
+                          onChange={(e) =>
+                            setFormData({ ...formData, id_rayon: e.target.value })
+                          }
+                          className="w-full px-3 py-2 border border-blue-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-600 outline-none"
+                        >
+                          <option value="">-- Pilih Rayon --</option>
+                          {rayonList.map((rayon) => (
+                            <option key={rayon.id} value={rayon.id}>
+                              {rayon.nama_rayon}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    </div>
+                  )}
                 </>
               )}
 

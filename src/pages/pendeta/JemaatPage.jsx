@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   deleteJemaat,
   createJemaat,
@@ -11,7 +11,7 @@ import { getAllRayon } from "../../services/eventService";
 
 const JemaatPage = () => {
   const { user: currentUser } = useAuth();
-  const isAdmin = currentUser?.role === "admin";
+  const isAdmin = currentUser?.role === "admin" || currentUser?.role === "pendeta";
   const [jemaat, setJemaat] = useState([]);
   const [rayonList, setRayonList] = useState([]); // State untuk menyimpan daftar rayon
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,8 +33,8 @@ const JemaatPage = () => {
   });
 
   useEffect(() => {
-    fetchData();
-    fetchRayon(); // Memanggil data rayon saat komponen dimuat
+    // Jalankan keduanya sekaligus (paralel) agar lebih cepat
+    Promise.all([fetchData(), fetchRayon()]);
   }, []);
 
   const fetchData = async () => {
@@ -152,7 +152,8 @@ const JemaatPage = () => {
     }
   };
 
-  const filteredJemaat = jemaat.filter((item) => {
+  // useMemo: hanya hitung ulang jika jemaat atau searchTerm berubah
+  const filteredJemaat = useMemo(() => jemaat.filter((item) => {
     const matchName = (item.name || "")
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -160,7 +161,7 @@ const JemaatPage = () => {
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     return matchName || matchEmail;
-  });
+  }), [jemaat, searchTerm]);
 
   // Helper untuk menampilkan nama rayon di tabel
   const getRayonName = (id) => {

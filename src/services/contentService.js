@@ -128,3 +128,33 @@ export const getPublicGaleri = async () => {
         throw error.response?.data?.message || 'Gagal memuat galeri publik.';
     }
 };
+
+// Mengambil pengumuman untuk halaman PUBLIK (tanpa login) — hanya scope 'publik' & status 'Aktif'
+export const getPublicPengumuman = async () => {
+    try {
+        const response = await axiosInstance.get('/content/pengumuman');
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Gagal memuat pengumuman publik.';
+    }
+};
+
+// Mengambil pengumuman untuk halaman JEMAAT (butuh login) — scope 'publik' + 'jemaat' & status 'Aktif'
+export const getJemaatPengumuman = async () => {
+    try {
+        const response = await axiosInstance.get('/content/jemaat/pengumuman');
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Gagal memuat pengumuman jemaat.';
+    }
+};
+
+// Mengambil pengumuman khusus RAYON milik user yang login — scope 'rayon' & id_rayon sesuai JWT
+export const getRayonPengumuman = async () => {
+    try {
+        const response = await axiosInstance.get('/content/rayon/pengumuman');
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || 'Gagal memuat pengumuman rayon.';
+    }
+};

@@ -70,8 +70,7 @@ export const createActivity = async (data) => {
 };
 
 export const updateActivity = async (id, data) => { 
-    // Laravel membutuhkan POST method untuk _method=PUT pada FormData
-    const res = await axiosInstance.post(`/event/admin/activity/${id}`, data); 
+    const res = await axiosInstance.put(`/event/admin/activity/${id}`, data); 
     return res.data; 
 };
 

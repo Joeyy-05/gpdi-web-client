@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Bell, ChevronLeft, ChevronRight, Search } from "lucide-react";
 // Link dihapus karena kita tidak lagi pindah halaman
-import { getAllPengumuman } from "../../services/contentService";
+import { getJemaatPengumuman } from "../../services/contentService";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -31,13 +31,10 @@ export default function PengumumanJemaatPage() {
     const fetchPengumuman = async () => {
       setLoading(true);
       try {
-        const res = await getAllPengumuman();
+        const res = await getJemaatPengumuman();
 
-        const activeData = (res.data || []).filter(
-          (item) => item.status === "Aktif",
-        );
-
-        const formattedData = activeData.map((item) => {
+        // Backend sudah memfilter: hanya status 'Aktif', scope 'publik' + 'jemaat'
+        const formattedData = (res.data || []).map((item) => {
           let catLabel = "Umum";
           if (item.scope === "publik") catLabel = "Publik";
           if (item.scope === "jemaat") catLabel = "Internal Jemaat";
@@ -57,7 +54,7 @@ export default function PengumumanJemaatPage() {
           };
         });
 
-        setPengumumanData(formattedData.reverse());
+        setPengumumanData(formattedData);
       } catch (error) {
         console.error("Gagal memuat pengumuman jemaat:", error);
       } finally {
