@@ -105,7 +105,9 @@ function App() {
           >
             <Route element={<AdminLayout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/dashboard/jemaat" element={<JemaatPage />} />
+              <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+                <Route path="/dashboard/jemaat" element={<JemaatPage />} />
+              </Route>
               <Route path="/dashboard/konten" element={<KontenPage />} />
               <Route path="/dashboard/jadwal" element={<JadwalRayonPage />} />
               <Route
