@@ -82,19 +82,21 @@ export default function PengumumanPage() {
           </section>
 
           {/* Banner */}
-          <section className="mt-12 px-5 sm:px-8 lg:px-12">
-            <div className="relative mx-auto flex h-[330px] w-full items-center justify-center overflow-hidden rounded-2xl bg-[#0D1282] shadow-xl sm:h-[410px]">
+          <section className="mt-10 px-5 sm:px-8 lg:px-12">
+            <div className="relative mx-auto flex h-52 w-full items-center justify-center overflow-hidden rounded-2xl bg-[#0D1282] shadow-lg sm:h-64">
               <img
                 src={hero.gambarBanner}
                 alt="Banner Pengumuman"
-                className="absolute inset-0 h-full w-full object-cover opacity-40"
+                className="absolute inset-0 h-full w-full object-cover opacity-30"
               />
               <div className="relative z-10 px-6 text-center text-white">
-                <Megaphone className="mb-6 text-red-200" size={30} />
-                <p className="max-w-3xl px-5 text-xl font-medium italic leading-relaxed sm:text-3xl">
+                <Megaphone className="mx-auto mb-4 text-red-300" size={24} />
+                <p className="max-w-2xl text-sm font-medium italic leading-relaxed text-blue-100 sm:text-base">
                   "{hero.isi}"
                 </p>
-                <p className="mt-4 text-[18px] font-bold">— {hero.referensi}</p>
+                <p className="mt-3 text-xs font-bold uppercase tracking-widest text-[#D71313]">
+                  — {hero.referensi}
+                </p>
               </div>
             </div>
           </section>

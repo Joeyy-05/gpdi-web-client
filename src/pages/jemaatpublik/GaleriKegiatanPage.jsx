@@ -110,19 +110,19 @@ export default function GaleriKegiatanPage() {
             </p>
           </section>
 
-          {/* Hero Banner (Data Statis dari galeriData) */}
-          <section className="mt-12 px-5 sm:px-8 lg:px-12">
-            <div className="relative mx-auto flex h-[330px] w-full items-center justify-center overflow-hidden rounded-2xl bg-[#0D1282] shadow-xl sm:h-[410px]">
+          {/* Hero Banner — Konsisten dengan halaman lain */}
+          <section className="mt-10 px-5 sm:px-8 lg:px-12">
+            <div className="relative mx-auto flex h-52 w-full items-center justify-center overflow-hidden rounded-2xl bg-[#0D1282] shadow-lg sm:h-64">
               <img
                 src={hero.gambarBanner}
                 alt="Banner Galeri"
-                className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-overlay"
+                className="absolute inset-0 h-full w-full object-cover opacity-30"
               />
               <div className="relative z-10 px-6 text-center text-white">
-                <p className="max-w-3xl px-5 text-xl font-medium italic leading-relaxed drop-shadow-md sm:text-3xl">
+                <p className="max-w-2xl text-sm font-medium italic leading-relaxed text-blue-100 sm:text-base">
                   "{hero.ayat}"
                 </p>
-                <p className="mt-6 text-[20px] font-bold drop-shadow-md">
+                <p className="mt-3 text-xs font-bold uppercase tracking-widest text-[#D71313]">
                   — {hero.referensi}
                 </p>
               </div>

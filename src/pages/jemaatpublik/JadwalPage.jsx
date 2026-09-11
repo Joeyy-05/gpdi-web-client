@@ -236,27 +236,33 @@ const JadwalPage = () => {
       </section>
 
       {/* ══ KEGIATAN KHUSUS / EVENT GEREJA (Card) ═════════════════════════ */}
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-12">
-        <h2 className="mb-10 text-3xl font-extrabold text-[#0D1282]">
-          Kegiatan Khusus / Event
-        </h2>
+      <section className="mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:px-12">
+        <div className="mb-6 flex items-end justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#D71313]">Agenda mendatang</p>
+            <h2 className="mt-1 text-2xl font-extrabold text-[#0D1282]">
+              Kegiatan Khusus / Event
+            </h2>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {loading ? (
             <p className="col-span-full text-center text-gray-500 animate-pulse font-semibold">
               Memuat kegiatan khusus...
             </p>
           ) : kegiatanKhusus.length === 0 ? (
-            <p className="col-span-full text-center text-gray-400 py-10 border border-dashed border-gray-300 rounded-lg">
+            <p className="col-span-full text-center text-gray-400 py-8 border border-dashed border-gray-300 rounded-lg text-sm">
               Tidak ada event khusus dalam waktu dekat.
             </p>
           ) : (
             kegiatanKhusus.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="h-52 w-full overflow-hidden bg-gray-200 relative">
+                {/* Gambar */}
+                <div className="relative h-36 w-full overflow-hidden bg-gray-200">
                   <img
                     src={
                       item.gambar
@@ -264,37 +270,32 @@ const JadwalPage = () => {
                         : "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800"
                     }
                     alt={item.judul || item.title || item.nama_kegiatan}
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
+                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                   />
-                  <div className="absolute left-4 top-4 rounded-full bg-[#D71313] px-3 py-1 text-xs font-bold text-white shadow-md">
+                  <div className="absolute left-3 top-3 rounded-full bg-[#D71313] px-2.5 py-0.5 text-[10px] font-bold uppercase text-white shadow">
                     EVENT KHUSUS
                   </div>
                 </div>
-                <div className="p-8 flex flex-col flex-1">
-                  <h3 className="mb-4 line-clamp-2 text-2xl font-bold text-[#0D1282]">
+
+                {/* Konten */}
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="line-clamp-2 text-sm font-bold text-[#0D1282]">
                     {item.judul || item.title || item.nama_kegiatan}
                   </h3>
-                  <p className="text-base mb-2 text-gray-700">
-                    <strong className="font-bold text-[#D71313]">
-                      Tanggal
-                    </strong>
-                    <span>
-                      {" "}
-                      :{" "}
-                      {item.event_date
-                        ? new Date(item.event_date).toLocaleDateString(
-                            "id-ID",
-                            { day: "2-digit", month: "long", year: "numeric" },
-                          )
-                        : "-"}
-                    </span>
+                  <p className="mt-1.5 text-xs text-gray-500">
+                    <span className="font-semibold text-[#D71313]">Tanggal</span>{" "}:{" "}
+                    {item.event_date
+                      ? new Date(item.event_date).toLocaleDateString("id-ID", {
+                          day: "2-digit", month: "long", year: "numeric",
+                        })
+                      : "-"}
                   </p>
-                  <p className="text-base mb-6 text-gray-600 italic flex-1 line-clamp-3">
-                    "{item.description || item.deskripsi}"
+                  <p className="mt-2 text-xs leading-relaxed text-gray-500 italic flex-1 line-clamp-2">
+                    {item.description || item.deskripsi}
                   </p>
                   <button
                     onClick={() => setSelectedEvent(item)}
-                    className="w-fit rounded-full bg-[#0D1282] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#D71313]"
+                    className="mt-3 w-fit rounded-full bg-[#0D1282] px-4 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#D71313]"
                   >
                     Lihat Detail
                   </button>

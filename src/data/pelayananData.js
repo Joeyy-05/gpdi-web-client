@@ -5,7 +5,7 @@ export const pelayananData = {
     subjudul:
       "Temukan wadah untuk bertumbuh dan melayani bersama di GPdI Jemaat Sibulele",
     gambarUtama:
-      "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=2000&auto=format&fit=crop",
   },
   items: [
     {

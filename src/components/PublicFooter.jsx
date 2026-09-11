@@ -1,51 +1,133 @@
 import { homeData } from "../data/homeData";
-import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
+import { Mail, MapPin, Phone, ArrowUpRight, Heart } from "lucide-react";
+import gpdiLogo from "../assets/Logo-Gereja-Pantekosta-di-Indonesia-GPdI.png";
+
+const FacebookIcon = () => (
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+const YoutubeIcon = () => (
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
+    <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#07104f" />
+  </svg>
+);
+const InstagramIcon = () => (
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
+
+const quickLinks = [
+  { label: "Beranda", href: "/" },
+  { label: "Jadwal Ibadah", href: "/#jadwal" },
+  { label: "Pengumuman", href: "/pengumuman" },
+  { label: "Tentang Kami", href: "/#tentang" },
+];
+
+const socials = [
+  { icon: FacebookIcon, href: "#", label: "Facebook" },
+  { icon: YoutubeIcon, href: "#", label: "YouTube" },
+  { icon: InstagramIcon, href: "#", label: "Instagram" },
+];
 
 export default function PublicFooter() {
   const { gereja } = homeData;
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer
-      className="bg-[#f7f8fb] px-5 pb-6 pt-4"
+      className="bg-[#07104f] text-white"
       style={{ fontFamily: "Montserrat, sans-serif" }}
     >
-      <div className="mx-auto w-full max-w-7xl rounded-2xl bg-[#07104f] px-6 py-10 text-white shadow-xl shadow-blue-950/10 sm:px-10 lg:px-12">
-        <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-200">
-              GPdI Jemaat Sibulele
+      {/* Main content */}
+      <div className="mx-auto max-w-6xl px-6 py-10 sm:px-10">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+
+          {/* Kolom 1: Brand */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2.5">
+              <img
+                src={gpdiLogo}
+                alt="Logo GPdI"
+                className="h-8 w-8 rounded-full bg-white object-contain p-0.5"
+              />
+              <span className="text-sm font-bold tracking-wide">GPdI Sibulele</span>
+            </div>
+            <p className="text-xs leading-relaxed text-blue-200/80">
+              Bersama melayani dan bertumbuh dalam kasih Kristus. Portal informasi resmi jemaat GPdI Sibulele.
             </p>
-            <h3 className="mt-3 max-w-md text-2xl font-extrabold leading-tight sm:text-3xl">
-              Bersama melayani, bertumbuh dalam kasih.
-            </h3>
-            <div className="mt-7 grid gap-3 text-sm text-blue-100 sm:grid-cols-2">
-              <p className="flex items-start gap-3">
-                <MapPin size={17} className="mt-0.5 shrink-0 text-red-300" />
-                {gereja.alamat}
-              </p>
-              <p className="flex items-start gap-3">
-                <Phone size={17} className="mt-0.5 shrink-0 text-red-300" />
-                {gereja.telepon}
-              </p>
-              <p className="flex items-start gap-3">
-                <Mail size={17} className="mt-0.5 shrink-0 text-red-300" />
-                {gereja.email}
-              </p>
+            <div className="flex items-center gap-2 pt-1">
+              {socials.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="flex h-7 w-7 items-center justify-center rounded-md bg-white/8 text-blue-200 transition hover:bg-white/15 hover:text-white"
+                >
+                  <Icon />
+                </a>
+              ))}
             </div>
           </div>
-          <a
-            href={`mailto:${gereja.email}`}
-            className="group flex w-fit items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-[#0D1282] transition hover:bg-blue-50"
-          >
-            Hubungi kami{" "}
-            <ArrowUpRight
-              size={16}
-              className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          </a>
+
+          {/* Kolom 2: Navigasi */}
+          <div className="flex flex-col gap-3">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-blue-300">Navigasi</p>
+            <ul className="flex flex-col gap-2">
+              {quickLinks.map(({ label, href }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className="text-xs text-blue-100/80 transition hover:text-white"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Kolom 3: Kontak */}
+          <div className="flex flex-col gap-3">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-blue-300">Kontak</p>
+            <ul className="flex flex-col gap-2.5">
+              <li className="flex items-start gap-2 text-xs leading-relaxed text-blue-100/80">
+                <MapPin size={13} className="mt-0.5 shrink-0 text-red-300" />
+                {gereja.alamat}
+              </li>
+              <li className="flex items-center gap-2 text-xs text-blue-100/80">
+                <Phone size={13} className="shrink-0 text-red-300" />
+                {gereja.telepon}
+              </li>
+              <li className="flex items-center gap-2 text-xs text-blue-100/80">
+                <Mail size={13} className="shrink-0 text-red-300" />
+                {gereja.email}
+              </li>
+            </ul>
+            <a
+              href={`mailto:${gereja.email}`}
+              className="group mt-1 flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-white/20"
+            >
+              Hubungi Kami
+              <ArrowUpRight size={12} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          </div>
         </div>
-        <div className="mt-10 border-t border-white/15 pt-5 text-xs text-blue-200">
-          <p>© 2026 GPdI Sibulele. Semua hak dilindungi.</p>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-1.5 px-6 py-4 sm:flex-row sm:px-10">
+          <p className="text-[11px] text-blue-300/70">
+            © {currentYear} GPdI Sibulele. Semua hak dilindungi.
+          </p>
+          <p className="flex items-center gap-1 text-[11px] text-blue-300/70">
+            Dibuat dengan <Heart size={10} className="fill-red-400 text-red-400" /> untuk jemaat Tuhan
+          </p>
         </div>
       </div>
     </footer>
